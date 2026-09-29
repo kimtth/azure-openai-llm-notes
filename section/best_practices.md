@@ -1,12 +1,12 @@
 # Best Practices
 
-**Navigation Guide:**
+**Navigation Guide:** Choose the route closest to your task; arrows show a suggested progression, and alternatives are marked explicitly.
 
-| If | Begin With |
+| Goal | Start with |
 |---|---|
-| Designing a RAG System | [The Problem with RAG](#the-problem-with-rag) → [RAG Solution Design](#rag-solution-design) → [RAG Research](#rag-research) |
-| Designing an Agent System | [Agent Design Patterns](#agent-design-patterns) → [Agent Research](#agent-research) → [Tool Use](#tool-use) |
-| Preparing an Application for Production | [RAG Solution Design](#rag-solution-design) or [Agent Design Patterns](#agent-design-patterns) → [Tool Use](#tool-use) → [LLMOps](tools_extra.md#llmops-large-language-model-operations) |
+| Design a RAG system | [The Problem with RAG](#the-problem-with-rag) → [RAG Solution Design](#rag-solution-design); continue to [RAG Research](#rag-research) for research findings |
+| Design an agent system | [Agent Design Patterns](#agent-design-patterns) → [Tool Use](#tool-use); consult [Agent Research](#agent-research) for research findings |
+| Prepare an application for production | Choose [RAG Solution Design](#rag-solution-design) or [Agent Design Patterns](#agent-design-patterns); where tools are involved, review [Tool Use](#tool-use), then [LLMOps](tools_extra.md#llmops-large-language-model-operations) |
 
 ### **Contents**
 
@@ -223,6 +223,7 @@
 - [Agentic Context Management📑](https://arxiv.org/html/2607.21503): Proposes lifecycle primitives for architecting, ingesting, scoping, anticipating, compacting, and consolidating agent context. [Jul 2026]
 - [Agent Lightning v1.0📑](https://arxiv.org/abs/2608.17528): Harnessed agentic reinforcement-learning framework designed to train arbitrary agent harnesses. [Aug 2026]
 - [Agentic Reasoning for Large Language Models📑](https://arxiv.org/abs/2601.12538): Survey of agentic reasoning: planning, self-evolution, and multi-agent collaboration. [Jan 2026]
+- [Agentic Software: How AI Agents Are Restructuring the Software Paradigm📑](https://arxiv.org/abs/2606.05608) - Examines how autonomous agents change software development and engineering workflows. [Jun 2026]
 - [Agentic World Modeling📑](https://arxiv.org/pdf/2604.22748): Survey of world-model foundations, capabilities, laws, and agentic applications. [Apr 2026]
 - [AgentCoder📑](https://arxiv.org/abs/2312.13010): Multi-agent code generation with iterative testing. [Dec 2023]
 - [AgentQ📑](https://arxiv.org/abs/2408.07199): Off-policy policy gradient for multi-step agent planning. [13 Aug 2024]
@@ -247,6 +248,7 @@
 - [Hyperagents📑](https://arxiv.org/abs/2603.19461): Self-referential agents. Metacognitive self-improvement, where AI rewrites its own improvement process—achieving cross-domain gains (e.g., 0→0.71 in review tasks). [Mar 2026]
 - [LDB📑](https://arxiv.org/abs/2402.16906): LLM debugger verifying runtime execution step by step. [Feb 2024]
 - [LLMs Corrupt Your Documents When You Delegate📑](https://arxiv.org/abs/2604.15597): DELEGATE-52 benchmark shows long delegated workflows silently corrupt documents. [Apr 2026]
+- [The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement📑](https://arxiv.org/abs/2609.11873) - Studies pathways toward recursive self-improvement in AI systems. [Sep 2026]
 - [Plan-and-Act📑](https://arxiv.org/abs/2503.09572): Separates planning from execution for long-horizon agent tasks. [ICML 2025]
 - [Recursive Multi-Agent Systems📑](https://recursivemas.github.io/): Latent-space recursive collaboration improves accuracy while reducing tokens. [May 2026]
 - [Recursive Language Models (RLMs), a general inference strategy📑](https://arxiv.org/abs/2512.24601): A new general inference strategy that lets large language models process arbitrarily long inputs by treating the entire prompt as an external environment and programmatically decomposing and recursively calling the model on pieces of the input. [Dec 2025]

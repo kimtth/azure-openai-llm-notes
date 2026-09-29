@@ -1,18 +1,21 @@
 # Tools, Datasets, and Evaluation
 
-**Navigation Guide:**
+**Navigation Guide:** Choose the evaluation or operations resources that match the system under study; arrows show a suggested progression.
 
-| If | Begin With |
+| Goal | Start with |
 |---|---|
-| Base-Model Capability | [LLM Evaluation Benchmarks](#llm-evaluation-benchmarks) |
-| RAG Quality | [RAG Solution Design](best_practices.md#rag-solution-design) and [RAG Research](best_practices.md#rag-research) |
-| Agent or Tool-Use Behavior | [Tool Calling & Agentic](#tool-calling--agentic) Benchmarks |
-| A Deployed Application | [Evaluation Metrics](#evaluation-metrics) and [LLMOps](#llmops-large-language-model-operations) |
+| Compare base-model capabilities | [LLM Evaluation Benchmarks](#llm-evaluation-benchmarks) |
+| Assess RAG quality | [RAG Solution Design](best_practices.md#rag-solution-design) → [RAG Research](best_practices.md#rag-research) |
+| Evaluate agent and tool-use behavior | [Tool Calling & Agentic](#tool-calling--agentic) benchmarks |
+| Evaluate and operate a deployed application | [Evaluation Metrics](#evaluation-metrics) → [LLMOps](#llmops-large-language-model-operations) |
 
 ### **Contents**
 
 - [Datasets for LLM Training](#datasets-for-llm-training)
 - [Evaluating Large Language Models](#evaluating-large-language-models)
+  - [LLM Evaluation Benchmarks](#llm-evaluation-benchmarks)
+    - [Tool Calling & Agentic](#tool-calling--agentic)
+  - [Evaluation Metrics](#evaluation-metrics)
 - [LLMOps: Large Language Model Operations](#llmops-large-language-model-operations)
 - [LLM for Robotics](#llm-for-robotics)
 - [Awesome Demo](#awesome-demo)

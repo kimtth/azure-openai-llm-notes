@@ -1,18 +1,13 @@
 ---
 name: update-cite-count
-description: "Guidelines for updating citation counts for papers in the section files using the `update_citation_counts.py` tool. USE FOR: Updating citation counts for papers listed in the section files to keep information current. DO NOT USE FOR: 1) Adding new papers to the section files; 2) Classifying entries into sections."
+description: "Update citation counts for papers in the ranked sections of section/best_practices.md with update_citation_counts.py. USE FOR: refreshing counts. DO NOT USE FOR: adding papers or classifying entries."
 ---
 
-## Workflow: Updating Citation Counts for Papers
-
-To keep the citation counts for papers in the section files up to date, follow these guidelines when using the `update_citation_counts.py` tool.
-
-1. The output count is used for the inline ranked sections in `section/best_practices.md`: `RAG Research (Ranked by cite count >=100)` and `Agent Research (Ranked by cite count >=100)`.
-2. Run `update_citation_counts.py` directly to fetch the latest Semantic Scholar citation counts for papers already listed in those two sections. Use `--dry-run` first when reviewing a large update.
-3. The script updates citation counts in place when counts changed. It does not add new papers, rebuild section indexes, or update generated pool files.
-4. After updating, review `section/best_practices.md` to confirm the counts changed correctly and the ranked order is still accurate. If counts change enough to affect ordering, manually reorder the entries.
+The script refreshes Semantic Scholar counts in place for the `RAG Research` and `Agent Research` sections (ranked by cite count >=100). It does not add papers.
 
 ```powershell
 .venv\Scripts\python.exe code/update_citation_counts.py --dry-run
 .venv\Scripts\python.exe code/update_citation_counts.py
 ```
+
+Afterwards, check `section/best_practices.md` and manually reorder entries if the ranking changed.
