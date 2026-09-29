@@ -113,7 +113,10 @@
 ### **Architecture Comparisons**
 
 - [The Big LLM Architecture Comparison](https://sebastianraschka.com/blog/2025/the-big-llm-architecture-comparison.html):💡 [19 Jul 2025]
+- [Contrastive Language Models](https://contrastive-lm.notion.site/) - Introduces CLM-8B, An Open System One Model That Matches Jev at Up to 9x Lower Latency. [Sep 2026]
+- [Laya🤗](https://huggingface.co/convaiinnovations/laya) - Open-source alternative to TypeSafe Jev, runs locally.
 - [LLM Architecture Gallery](https://sebastianraschka.com/llm-architecture-gallery/): Visual guide to modern LLM architectures and design tradeoffs. [26 Mar 2026]  
+- [Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation📑](https://arxiv.org/abs/2507.10524) - Learns adaptive token-level computation through dynamic recursive depth. [Jul 2025]
 
   | Model                 | Parameters | Attention Type                           | MoE                             | Norm                            | Positional Encoding            | Notable Features                                                                            |
   | --------------------- | ---------- | ---------------------------------------- | ------------------------------- | ------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------- |
@@ -310,6 +313,7 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [NotebookLlama](https://github.com/meta-llama/llama-recipes/tree/main/recipes/quickstart/NotebookLlama): An Open Source version of NotebookLM [28 Oct 2024]
 - [Llama 3.3](https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_3/): a text-only 70B instruction-tuned model. Llama 3.3 70B approaches the performance of Llama 3.1 405B. [6 Dec 2024]
 - [Llama 4](https://www.llama.com/docs/model-cards-and-prompt-formats/llama4_omni/):  Mixture of Experts (MoE). Llama 4 Scout (actived 17b / total 109b, 10M Context, single GPU), Llama 4 Maverick (actived 17b / total 400b, 1M Context) / [git](https://github.com/meta-llama/llama-models/tree/main/models/llama4): Model Card [5 Apr 2025] 
+- [Meta Muse](https://ai.meta.com/muse/): Meta's personal AI agent for handling tasks across apps, files, and the web, with user approval for consequential actions. [8 Sep 2026]
 - [Muse Glimmer](https://developer.meta.com/ai/models/muse-glimmer/): Apache-2.0, 30B open model for always-on local agents; supports reliable tool calling, persistent state, self-managed memory, and multimodal perception on a single GPU or Mac. [Aug 2026]
 - [Muse Spark](https://ai.meta.com/blog/introducing-muse-spark-msl): Meta's multimodal reasoning model with tool use, visual chain-of-thought, and multi-agent Contemplating mode. [Apr 2026]
 - [Muse Spark 1.2](https://developer.meta.com/ai/models/muse-spark/): 1M-context model optimized for coding workflows, reliable tool calling, and long-running tasks. [Aug 2026]
@@ -359,6 +363,10 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - Motif Technologies is a South Korean AI company founded in 2025.
 - [Motif-3 Beta🤗](https://huggingface.co/Motif-Technologies/Motif-3-Beta): 314B-parameter MoE model with 13B active parameters and 256K context. [Jul 2026]
 
+#### **Nanbeige**
+
+- [Nanbeige 4.2-3B🤗](https://huggingface.co/Nanbeige/Nanbeige4.2-3B) - Compact 3B-parameter agentic model using a Looped Transformer architecture. [Jul 2026]
+
 #### **NVIDIA**
 
 - [Alpamayo](https://www.nvidia.com/en-us/self-driving-cars/alpamayo/): Open vision-language-action models for reasoning-based autonomous driving.
@@ -393,6 +401,10 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - Thinking Machines Lab is a U.S. AI company founded in February 2025.
 - [Inkling🤗](https://huggingface.co/thinkingmachines/inkling): 975B-parameter MoE model with 41B active parameters, 1M context, and native text, image, and audio reasoning. [Jul 2026]
 
+#### **TypeSafe**
+
+- [Jev: System One Models](https://typesafe.ai/blog/introducing-system-one-models-and-jev) - Introduces calibrated structured decision models and the Jev agent. [Sep 2026]
+
 #### **xAI**
 
 - xAI is an American AI company founded by Elon Musk in March 2023
@@ -405,6 +417,7 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [Grok 4.1](https://x.ai/news/grok-4-1) [17 Nov 2025]
 - [Grok 4.3 Beta](https://grok.com/release-notes/apr-17-2026): Pretrained Grok model update with computer access for creating presentations, documents, and spreadsheets. [Apr 2026]
 - [Grok 4.6](https://x.ai/news/grok-4-6): Long-horizon agentic model for coding, research, and interactive work; available through the API, Grok Build, Cursor, and partners. [12 Aug 2026]
+- [Grok 4.7](https://x.ai/news/grok-4-7) - Frontier model for long-running coding and knowledge-work tasks. [Sep 2026]
 
 #### **Xiaomi**
 
@@ -1014,6 +1027,7 @@ denses the reasoning process into minimal, abstract
 - [How Far Are We From AGI📑](https://arxiv.org/abs/2405.10313): A survey discussing AGI's goals, developmental trajectory, and alignment technologies, providing a roadmap for AGI realization. [16 May 2024]
 - [How People Are Really Using AI in 2026](https://hbr.org/2026/06/how-people-are-really-using-ai-in-2026): 12,637-use-case study: therapy remains #1; troubleshooting, technical software use, agentic operations, and vibe coding rise; warns about “thinkslop” and shadow AI at work. [Jun 2026]
 - [Investigating Affective Use and Emotional Well-being on ChatGPT](https://www.media.mit.edu/publications/investigating-affective-use-and-emotional-well-being-on-chatgpt/): The MIT study found that higher ChatGPT usage correlated with increased loneliness, dependence, and lower socialization. [21 Mar 2025]
+- [Jacob Coxon’s Resignation Statement](https://x.com/hilbertspaess/status/2097476196791709843) - Public statement criticizing frontier labs’ pursuit of self-improving superintelligence. [Sep 2026]
 - [Key figures and their predicted AGI timelines](https://x.com/slow_developer/status/1858877008375152805):💡AGI might be emerging between 2025 to 2030. [19 Nov 2024]
 - [Levels of AGI for Operationalizing Progress on the Path to AGI📑](https://arxiv.org/abs/2311.02462): Provides a comprehensive discussion on AGI's progress and proposes metrics and benchmarks for assessing AGI systems. [4 Nov 2023]
 - [Linus Torvalds: 90% of AI marketing is hype](https://www.theregister.com/2024/10/29/linus_torvalds_ai_hype):💡AI is 90% marketing, 10% reality [29 Oct 2024]
@@ -1064,6 +1078,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 - [AI-powered success—with more than 1,000 stories of customer transformation and innovation](https://www.microsoft.com/en-us/microsoft-cloud/blog/2025/07/24/ai-powered-success-with-1000-stories-of-customer-transformation-and-innovation/)💡[24 July 2025]
 - [Anthropic Clio](https://www.anthropic.com/research/clio): Privacy-preserving insights into real-world AI use [12 Dec 2024]
 - [Anthropic Economic Index](https://www.anthropic.com/news/the-anthropic-economic-index): a research on the labor market impact of technologies. The usage is concentrated in software development and technical writing tasks. [10 Feb 2025]
+- [Anthropic Economic Scenarios](https://www.anthropic.com/institute/econ-scenarios) - Explores modest, substantial, and extreme AI-driven economic change scenarios. [Sep 2026]
 - [Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence📑](https://digitaleconomy.stanford.edu/wp-content/uploads/2025/08/Canaries_BrynjolfssonChandarChen.pdf): early-career workers (ages 22–25) in AI-exposed jobs fell 13%, while older workers remained stable or grew. [26 Aug 2025]
 - [Chatbot Interviewers Fill More Jobs](https://www.deeplearning.ai/the-batch/study-shows-ai-agent-interviewers-improve-hiring-retention-in-customer-service-jobs/): Using chatbots as interviewers improves hiring efficiency and retention in customer service roles. [3 Sep 2025]
 - [Examining the Use and Impact of an AI Code Assistant on Developer Productivity and Experience in the Enterprise📑](https://arxiv.org/abs/2412.06603): IBM study surveying developer experiences with watsonx Code Assistant (WCA). Most common use: code explanations (71.9%). Rated effective by 57.4%, ineffective by 42.6%. Many described WCA as similar to an “intern” or “junior developer.” [9 Dec 2024]
@@ -1071,6 +1086,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 - [Google: 321 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/) [19 Dec 2024]
 - [Google: 60 of our biggest AI announcements in 2024](https://blog.google/technology/ai/google-ai-news-recap-2024/) [23 Dec 2024]
 - [How people are using ChatGPT](https://openai.com/index/how-people-are-using-chatgpt/): OpenAI. Broadly adopted worldwide, mainly for advice (49%), task completion (40%), and creative expression (11%), with significant work-related use and rapid uptake in lower-income regions. [15 Sep 2025]
+- [HarnessTax](https://harnesstax.github.io/) - Benchmark study comparing coding-agent harnesses on task success and cost. [Sep 2026]
 - [How real-world businesses are transforming with AI](https://blogs.microsoft.com/blog/2024/11/12/how-real-world-businesses-are-transforming-with-ai/):💡Collected over 200 examples of how organizations are leveraging Microsoft’s AI capabilities. [12 Nov 2024]
 - [Rapid Growth Continues for ChatGPT, Google’s NotebookLM](https://www.similarweb.com/blog/insights/ai-news/chatgpt-notebooklm/) [6 Nov 2024]
 - [Senior Developers Ship nearly 2.5x more AI Code than Junior Counterparts](https://www.fastly.com/blog/senior-developers-ship-more-ai-code): About a third of senior developers (10+ years of experience) say over half their shipped code is AI-generated [27 Aug 2025]
@@ -1090,6 +1106,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 
 
 ## **Model Roadmaps and Products**
+- [Project HydraFusion: Frontier Quality via Multi-Model Orchestration](https://github.blog/ai-and-ml/github-copilot/project-hydrafusion-frontier-quality-via-multi-model-orchestration/) - Research-preview Copilot workflow that routes tasks across models for coding quality and cost trade-offs. [Sep 2026]
 
 ### **OpenAI Products**
 
@@ -1144,16 +1161,19 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [GPT-5.4](https://openai.com/index/introducing-gpt-5-4/): Thinking, coding, and native computer-use in a single model. [Mar 2026]
 - [GPT-5.5](https://openai.com/index/introducing-gpt-5-5/): OpenAI model for agentic coding, computer use, knowledge work, and scientific research with 1M API context. [Apr 2026]
 - [GPT-5.6 Sol](https://openai.com/index/previewing-gpt-5-6-sol): Limited-preview flagship with `max` reasoning, `ultra` subagents, SOTA Terminal-Bench 2.1, GeneBench/cyber gains, and $5/M input, $30/M output. [Jun 2026]
+- [GPT-6 Astra, Sol, and Luna](https://platform.openai.com/docs/models) - OpenAI model-family reference for GPT-6 Astra, Sol, and Luna.
 
 #### **Product and Platform Releases**
 
 - [Agents SDK & Response API](https://openai.com/index/new-tools-for-building-agents/): Responses API (Chat Completions + Assistants API), Built-in tools (web search, file search, computer use), Agents SDK for multi-agent workflows, agent workflow observability tools [11 Mar 2025] / [git](https://github.com/openai/openai-agents-python)
+- [An Alien Mind](https://openai.com/index/an-alien-mind/) - OpenAI research essay on nonhuman AI cognition and reasoning. [Sep 2026]
 - [Building ChatGPT Atlas](https://openai.com/index/building-chatgpt-atlas/): OpenAI's approach to building Atlas. OWL: OpenAI’s Web Layer. Mojo Protocol. [Oct 2025]
 - [ChatGPT agent](https://openai.com/index/introducing-chatgpt-agent/): Web-browsing, File-editing, Terminal, Email, Spreadsheet, Calendar, API-calling, Automation, Task-chaining, Reasoning. [17 Jul 2025]
 - [ChatGPT can now see, hear, and speak](https://openai.com/blog/chatgpt-can-now-see-hear-and-speak): It has recently been updated to support multimodal capabilities, including voice and image. [25 Sep 2023] [Whisper](https://github.com/openai/whisper) / [CLIP](https://github.com/openai/Clip)
  ![**github stars**](https://img.shields.io/github/stars/openai/whisper?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000) ![**github stars**](https://img.shields.io/github/stars/openai/Clip?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [ChatGPT Function calling](https://platform.openai.com/docs/guides/gpt/function-calling) [Jun 2023] > Azure OpenAI supports function calling.
 - [ChatGPT Images 2.0](https://openai.com/index/introducing-chatgpt-images-2-0/): New ChatGPT image-generation system focused on precision, multilingual text, richer styles, and visual reasoning. [Apr 2026]
+- [ChatGPT Images 2.5](https://help.openai.com/en/articles/8932459-dall-e-in-chatgpt) - ChatGPT image-generation feature reference; version-specific announcement remains unconfirmed.
 - [ChatGPT Memory](https://openai.com/blog/memory-and-new-controls-for-chatgpt): Remembering things you discuss `across all chats` saves you from having to repeat information and makes future conversations more helpful. [Apr 2024]
 - [ChatGPT Plugin](https://openai.com/blog/chatgpt-plugins) [23 Mar 2023]
 - [ChatGPT Work](https://openai.com/chatgpt-work/): Turns connected workplace context into documents, analyses, and scheduled tasks.
@@ -1167,6 +1187,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [GPT-Live](https://openai.com/index/introducing-gpt-live/): Full-duplex voice models for natural conversational interaction. [Jul 2026]
 - [Introducing the GPT Store](https://openai.com/blog/introducing-the-gpt-store): Roll out the GPT Store to ChatGPT Plus, Team and Enterprise users  [GPTs](https://chat.openai.com/gpts) [10 Jan 2024]
 - [New embedding models](https://openai.com/blog/new-embedding-models-and-api-updates) `text-embedding-3-small`: Embedding size: 512, 1536 `text-embedding-3-large`: Embedding size: 256,1024,3072 [25 Jan 2024]
+- [Navier–Stokes Solution](https://openai.com/index/navier-stokes-solution) - OpenAI research report on an AI-assisted solution to a Navier–Stokes problem. [Sep 2026]
 - Open AI Enterprise: Removes GPT-4 usage caps, and performs up to two times faster [Introducing chatgpt enterprise](https://openai.com/blog/introducing-chatgpt-enterprise) [28 Aug 2023]
 - [OpenAI DevDay 2023](https://openai.com/blog/new-models-and-developer-products-announced-at-devday): GPT-4 Turbo with 128K context, Assistants API (Code interpreter, Retrieval, and function calling), GPTs (Custom versions of ChatGPT: [Introducing gpts](https://openai.com/blog/introducing-gpts)), Copyright Shield, Parallel Function Calling, JSON Mode, Reproducible outputs [6 Nov 2023]
 - [OpenAI DevDay 2024](https://openai.com/devday/): Real-time API (speech-to-speech), Vision Fine-Tuning, Prompt Caching, and Distillation (fine-tuning a small language model using a large language model). [Community.openai.com](https://community.openai.com/t/devday-2024-san-francisco-live-ish-news/963456) [1 Oct 2024]
@@ -1188,6 +1209,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk): A toolkit for building multi-step, tool-using agents using the Claude API. [29 Sep 2025]
 - [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs): Anthropic Labs design experience for AI-assisted product and interface creation. [2026]
 - [Claude Fable 5 and Mythos 5](https://www.anthropic.com/news/claude-fable-5-mythos-5): Mythos-class models for long-horizon coding, vision, finance, and science; $10/M input, $50/M output, with staged safeguards/access. [Jun 2026]
+- [Fable 5.1, Mythos 5.1, Opus 5.5, and Sonnet 5.5](https://www.anthropic.com/news/claude-opus-5-5) - Anthropic model-family roundup, including Opus 5.5 and comparisons with Fable and Mythos. [Sep 2026]
 - [Claude Mythos Preview System Card](https://www.anthropic.com/claude-mythos-preview-system-card): Anthropic system card for Mythos Preview and its safety/evaluation profile. [2026]
 - [Claude Opus 4.6](https://www.anthropic.com/news/claude-opus-4-6): Advanced reasoning and coding flagship model. [5 Feb 2026]
 - [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7): Anthropic model release focused on advanced software engineering, long-running tasks, higher-resolution vision, and Claude Code xhigh defaults. [Apr 2026]
@@ -1208,12 +1230,14 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/): An autonomous AI agent leveraging Gemini Deep Think models to automatically find, debug, and fix complex software security vulnerabilities. [Oct 2025]
 - [Firebase Studio](https://firebase.google.com/docs/ai-assistance/gemini-in-firebase): A web-based IDE that uses Gemini to assist in building, refactoring, and troubleshooting full-stack web and mobile applications. [7 May 2025]
 - [Gemini CLI](https://github.com/google/gemini-cli): An open-source terminal interface for "vibecoding" that brings Gemini 3 Pro capabilities directly to the command line for script generation and automation. [25 Jun 2025]
+- [Gemini 3.8 Flash](https://deepmind.google/models/gemini/flash/) - Fast multimodal model for agentic coding, reasoning, and knowledge work. [Sep 2026]
 - [Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist): An enterprise-grade AI assistant for IDEs (VS Code, IntelliJ) that offers context-aware code completion, generation, and chat using Gemini models. [20 May 2025]
 - [Gemini Code Assist for GitHub](https://developers.google.com/gemini-code-assist/docs/review-github-code): A specialized agent that acts as a code reviewer on Pull Requests, identifying bugs, style issues, and suggesting fixes automatically. [20 May 2025]
 - [Google AI for Developers](https://ai.google.dev/): A suite of research tools including AI-powered documentation search and code explanation to accelerate learning and implementation. [Jul 2024]
 - [Google Antigravity](https://codelabs.developers.google.com/getting-started-google-antigravity): An "agent-first" IDE platform announced with Gemini 3 that gives autonomous agents direct control over editors, terminals, and browsers to build and verify software. [18 Nov 2025]
 - [Introducing "vibe design" with Stitch](https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/): AI-native design canvas for turning prompts and images into UI drafts. [18 Mar 2026]
 - [Jules](https://jules.google/): An autonomous coding agent that integrates with GitHub to plan, execute, and verify multi-step coding tasks like bug fixing and dependency management. [20 May 2025]
+- [Mapping the Complete Male Fruit-Fly Brain](https://research.google/blog/a-connectomics-milestone-mapping-the-complete-male-fruit-fly-brain/) - Maps more than 166,000 neurons and 125 million synaptic connections. [Sep 2026]
 - [NotebookLM](https://notebooklm.google/): An AI-powered research and thinking partner that synthesizes complex information and automates online research using the **Deep Research** agent feature. [13 Nov 2025]
 - [SIMA 2](https://deepmind.google/models/): (Scalable Instructable Multiworld Agent) A research agent that explores and learns to play across a variety of 3D video game environments, aimed at general-purpose robotics. [13 Nov 2025]
 - [Vertex AI Codey](https://cloud.google.com/vertex-ai): A family of foundation models (Code-Bison, Code-Gecko) optimized for code generation and completion, accessible via API. [29 Jun 2023]

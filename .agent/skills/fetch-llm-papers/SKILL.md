@@ -1,190 +1,37 @@
 ---
 name: fetch-llm-papers
-description: "Workflow for updating the LLM landscape paper pool (section/x_llm_papers.md) using fetch_llm_papers.py. Covers full re-fetch, resume from checkpoint, and adding new topics. USE FOR: Refreshing citation counts, expanding topic coverage. DO NOT USE FOR: Adding hand-curated entries to section files (use add-new-entry-from-temp-md), updating RAG/Agent citation sections in best_practices.md (use update-cite-count)."
+description: "Refresh the LLM landscape paper pool (section/x_llm_papers.md) with fetch_llm_papers.py. USE FOR: refreshing citation counts or expanding topic coverage. DO NOT USE FOR: hand-curated entries (use add-new-entry-from-temp-md) or best_practices.md citation counts (use update-cite-count)."
 ---
 
-## Overview
+`section/x_llm_papers.md` is a generated list of CS papers with at least 150 citations, ranked by citation count via Semantic Scholar. `models_research.md` links to it. Do not edit it by hand.
 
-The pool file `section/x_llm_papers.md` is a compact list of high-citation CS papers covering the LLM landscape, fetched from the Semantic Scholar API and ranked by citation count. It includes a topic coverage summary and per-paper topic tags. It is generated and maintained by `code/fetch_llm_papers.py`.
-
-The section `### **LLM Research (Ranked by cite count >=150)**` in `section/models_research.md` links to this file with a single descriptive line.
-
----
-
-## Script Reference
-
-**Script:** `code/fetch_llm_papers.py`  
-**Python env:** `.venv\Scripts\python.exe`
-
-### Key CLI Arguments
-
-| Argument | Default | Purpose |
-|----------|---------|---------|
-| `--output` | `section/x_llm_papers.md` | Output markdown file for the paper pool |
-| `--min-citations` | `150` | Minimum citation count filter |
-| `--top-n` | `50` | Max papers returned per topic query |
-| `--request-delay` | `2.0` | Delay between Semantic Scholar requests |
-| `--jitter` | `0.5` | Random extra delay between requests |
-| `--api-key-env` | `S2_API_KEY` | Env var containing a Semantic Scholar API key |
-| `--reset` | *(flag)* | Delete existing checkpoint and start from scratch |
-| `--topics` | *(all)* | Limit run to matching topic names (substring, case-insensitive) |
-| `--refresh-existing` | *(flag)* | Refresh existing papers with the Semantic Scholar batch API, without search queries |
-| `--batch-size` | `100` | Paper IDs per `--refresh-existing` batch |
-| `--annotate-existing` | *(flag)* | Rewrite the existing markdown with inferred topic tags without API calls |
-| `--annotate-source` | *(output file)* | Optional source for annotation; supports `git:<rev>:<path>` |
-
----
-
-## Workflow
-
-### 1. Refresh existing papers and citation counts
-
-Use this for the fastest routine update when the current topic coverage is still appropriate.
+## Commands
 
 ```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --refresh-existing `
-    --min-citations 150 `
-    --batch-size 100
+# Routine refresh of existing papers (no search queries)
+.venv\Scripts\python.exe code/fetch_llm_papers.py --refresh-existing --min-citations 150
+
+# Full re-fetch of all topics (required after editing TOPICS)
+.venv\Scripts\python.exe code/fetch_llm_papers.py --reset --min-citations 150 --top-n 50
+
+# Resume after a 429 or [pause]: rerun WITHOUT --reset
+.venv\Scripts\python.exe code/fetch_llm_papers.py --min-citations 150 --top-n 50
+
+# Re-tag topics locally, no API calls
+.venv\Scripts\python.exe code/fetch_llm_papers.py --annotate-existing --min-citations 150
+
+# Only some topics (substring match)
+.venv\Scripts\python.exe code/fetch_llm_papers.py --topics "PEFT" "Reasoning"
 ```
 
-- Uses Semantic Scholar's batch endpoint to update existing entries without re-running every search query.
-- Preserves each paper's existing topic tags, removes papers that no longer meet the citation threshold, and rewrites the output in citation order.
-- Use a lower `--batch-size` if unauthenticated requests are rate-limited.
+Set `$env:S2_API_KEY` if available. On rate limits, lower `--batch-size` or raise `--request-delay`. Run with `--help` for other options.
 
-### 2. Full re-fetch (refresh everything)
+## Topics
 
-Use when topics have been added/modified or citation counts are stale.
+Defined in the `TOPICS` dict in `code/fetch_llm_papers.py` (topic label to list of search queries). Use 4-8 word descriptive phrases, avoid the word "survey", and pair broad terms with LLM-relevance words. After editing, run with `--reset`.
 
-```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --reset `
-    --min-citations 150 `
-    --top-n 50 `
-    --request-delay 2.0 `
-    --jitter 0.5
-```
+## Notes
 
-- `--reset` deletes any existing checkpoint so all 41 topics are re-queried.
-- On success the checkpoint is automatically deleted.
-- `section/x_llm_papers.md` is rewritten with topic coverage, topic tags, and sequential numbering sorted by citation count.
-- If a Semantic Scholar API key is available, set `$env:S2_API_KEY` before running. The script sends it as the `x-api-key` header.
-
-### 3. Resume after API interruption
-
-The script saves a checkpoint (`section/x_llm_papers.checkpoint.json`) after each successful query and after each completed topic. If the run is interrupted by a rate-limit (HTTP 429), simply re-run **without** `--reset`:
-
-```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --min-citations 150 `
-    --top-n 50
-```
-
-The script prints `[resume] Loaded N papers, M completed topics, Q cached queries from checkpoint.` and skips already-finished topics. Query-level cache entries prevent successful queries from being reissued during resume.
-
-If a query fails after retries, the script writes partial progress, keeps the current topic incomplete, and exits with a `[pause]` message. Re-run later without `--reset`.
-
-### 4. Local annotation only (no API calls)
-
-Use this when the paper pool already exists and you only need topic coverage or tag extraction refreshed:
-
-```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --annotate-existing `
-    --min-citations 150
-```
-
-To rebuild annotations from the committed version of the file, useful after a partial write or parser change:
-
-```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --annotate-existing `
-    --annotate-source git:HEAD:section/x_llm_papers.md `
-    --min-citations 150
-```
-
-### 5. Refresh only specific topics
-
-```powershell
-.venv\Scripts\python.exe code/fetch_llm_papers.py `
-    --topics "PEFT" "Reasoning" `
-    --min-citations 150 `
-    --top-n 50
-```
-
-Matches topic names by substring (case-insensitive). New papers for matched topics are merged into the existing pool if a checkpoint exists; otherwise starts fresh for those topics only.
-
----
-
-## Adding or Modifying Topics
-
-Topics are defined in the `TOPICS` dict at the top of `fetch_llm_papers.py`. Each key is a topic label; the value is a list of Semantic Scholar search query strings.
-
-**Rules:**
-- Queries should be descriptive phrases, not single keywords — Semantic Scholar full-text search works best with 4–8 word phrases.
-- Avoid the word "survey" to capture research papers, benchmarks, and position papers, not just surveys.
-- Aim for 3–10 queries per topic. Overlapping queries are fine — deduplication is handled automatically by `paperId`.
-- After adding topics, run with `--reset` to re-fetch from scratch (checkpoint is stale once `TOPICS` changes).
-- Keep broad queries paired with relevance terms such as LLM, language model, transformer, foundation model, agent, RAG, or tool use. The script filters broad Semantic Scholar drift using topic keywords plus core LLM relevance terms.
-
-**Current topic areas (41 total):**
-
-| Category | Topics |
-|----------|--------|
-| Core LLM | Reasoning in LLMs, LLM Overview & History, Scaling Laws, LLM Architecture Innovations |
-| Training | Alignment & RLHF, RLAIF & Constitutional AI, RLVR & Process Reward Models, Instruction Tuning & SFT, PEFT & LoRA, Self-Supervised & Representation Learning |
-| Inference | Efficient LLMs: Training & Inference, Inference-Time Scaling & Test-Time Compute, LLMOps & Model Serving |
-| Applications | LLM Agents, Retrieval-Augmented Generation (RAG), GraphRAG & Knowledge Graphs, LLMs for Code, LLMs for Healthcare & Science, LLM for Robotics & Embodied AI, Function Calling & Tool Use, GUI Agents, Tabular Data & NL2SQL |
-| Multimodal | Multimodal LLMs, Multilingual & Low-Resource LLMs, Speech & Audio Language Models, Small Language Models, Mixture of Experts |
-| Evaluation | Evaluation of LLMs & Agents, Hallucination in LLMs, Trustworthy & Secure LLMs |
-| Generation | Structured Generation & Constrained Decoding |
-| Other | Prompt Engineering & In-Context Learning, Context Engineering, LLM Memory & Personalization, Embeddings & Vector Search, Data for LLMs, LLM Governance, Privacy & Copyright, Interpretability & Mechanistic Understanding, AIOps & Observability, Federated & Personalized AI, Continual Learning & Model Merging |
-
----
-
-## Output Format
-
-Each entry in `section/x_llm_papers.md`:
-
-```
-N. [Title📑](https://arxiv.org/abs/XXXX.XXXXX): First sentence of abstract. [Mon YYYY] (Citations: N,NNN; Topics: Topic A, Topic B)
-```
-
-- The file begins with `## Topic Coverage`, a count of inferred topic tags across all papers.
-- Numbered sequentially (`1.`, `2.`, ...) by citation count descending.
-- Link target is the arXiv URL if available, otherwise the Semantic Scholar URL.
-- Generated and retrieved timestamps are formatted in UTC. Paper dates are derived from the arXiv ID prefix (e.g. `2305.xxxxx` → `[May 2023]`).
-- Only Computer Science papers with `fieldsOfStudy` containing `"Computer Science"` are included.
-- Topic tags come from the API topic that found the paper when fetched, or local keyword inference when running `--annotate-existing`.
-
----
-
-## Checkpoint File
-
-`section/x_llm_papers.checkpoint.json` — JSON with these keys:
-
-```json
-{
-  "completed_topics": ["Reasoning in LLMs", "LLM Agents", ...],
-    "failed_queries": ["..."],
-    "query_cache": { "normalized query": [ ... ] },
-  "papers": [ { "paperId": "...", "title": "...", "citationCount": 123, ... } ]
-}
-```
-
-- Created/updated after each successful query and every topic completion.
-- Deleted automatically on successful full run.
-- If corrupted, delete manually and re-run with `--reset`.
-- To inspect: `python -c "import json; cp=json.load(open('section/x_llm_papers.checkpoint.json', encoding='utf-8')); print(len(cp['papers']), 'papers,', len(cp['completed_topics']), 'topics done,', len(cp.get('query_cache', {})), 'cached queries')"`
-
----
-
-## Common Pitfalls
-
-1. **Modified TOPICS but not using `--reset`:** The checkpoint from a previous run skips topics that already completed. After editing `TOPICS`, always use `--reset` to re-fetch all topics.
-
-2. **API rate limits (HTTP 429):** Semantic Scholar enforces per-IP rate limits. The script adds a default 2-second delay plus jitter between queries and retries with backoff. If repeatedly rate-limited, wait a few minutes and resume (no `--reset`). Increase `--request-delay` or `--backoff` to slow down further.
-
-3. **Failed queries marked as complete:** Do not manually add a topic to `completed_topics` after a 429 or timeout. The script intentionally leaves incomplete topics out of `completed_topics` so resume can retry only the missing query work.
-
-4. **Non-CS or off-topic papers in results:** The filter requires `"Computer Science"` in `fieldsOfStudy` and a topic/core LLM relevance match. Some highly cited ML papers may be excluded if they drift too far from the LLM landscape. This is intentional.
+- Entry format: `N. [Title📑](url): Abstract sentence. [Mon YYYY] (Citations: N; Topics: A, B)`.
+- Progress is saved in `section/x_llm_papers.checkpoint.json`, deleted on success. Delete it manually if corrupted.
+- Never add a topic to `completed_topics` by hand after a failure.
