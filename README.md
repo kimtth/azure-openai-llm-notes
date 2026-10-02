@@ -174,7 +174,7 @@ Pick the outcome closest to your task and follow the links in order. Each path i
 | 💡🏆 | Recommend | 📺 | Video content |
 | 📑 |  Academic paper | 🤗 | Huggingface |
 
-> **Info:** Applications that have been archived or have had no commits for more than 12 months are listed in [applications.old.md](section/applications.old.md).
+> **Info:** Applications that have been archived or have had no commits for more than 12 months are listed in [applications.old.md](section/applications.old.md). Archived Azure-related repositories are listed in [azure.old.md](section/azure.old.md).
 
 <!-- 
 All rights reserved © `kimtth` 

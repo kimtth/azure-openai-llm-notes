@@ -74,6 +74,7 @@ DEFAULT_TOPICS = [
     "agent2agent",
     "coding-agent",
     "ai-coding-agent",
+    "spec-driven",
     "deep-research",
     "research-agent",
     "computer-use",
@@ -117,6 +118,8 @@ DEFAULT_SEARCH_TERMS = [
     "agent skills",
     "AI coding agent",
     "AI coding assistant",
+    "spec-driven development",
+    "specification-driven development",
     "AI workflow",
     "AI productivity",
     "personal AI assistant",
@@ -160,6 +163,7 @@ RELEVANCE_PATTERN = re.compile(
     r"ai[- ](?:agents?|assistant|chat|chatbot|coding|workflow|application|applications|app|"
     r"image|video|voice|search|gateway|observability|productivity|capabilities|powered|driven|"
     r"generated|native|harness|team)|"
+    r"spec[- ]kit|(?:spec|specification)[- ]driven(?:[- ]development)?|"
     r"prompt[- ](?:engineering|management|optimization)|vector[- ]search|embeddings?|"
     r"model[- ](?:context protocol|serving|inference|fine[- ]tuning)"
     r")\b",
