@@ -9,6 +9,7 @@ A comprehensive, curated collection of resources for Azure OpenAI, Large Languag
 🔹Concise Summaries: Each resource is briefly described for quick understanding  
 🔹Chronological Organization: Resources appended with date (first commit, publication, or paper release)  
 🔹Monthly Updates: The list is updated monthly; candidate entries before the update are tracked in the issue.  
+🔹Applications archived or inactive for over 12 months are listed in [`applications.old.md`](./section/applications.old.md). Archived Azure repositories are listed in [`azure.old.md`](./section/azure.old.md).
 
 <!-- > [!TIP]
 > A refined list focusing on Azure and Microsoft products.  
@@ -173,8 +174,6 @@ Pick the outcome closest to your task and follow the links in order. Each path i
 | ![**github**](https://img.shields.io/github/stars/kimtth/awesome-azure-openai-llm?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000) | GitHub repository | 🗄️ | Archived files |
 | 💡🏆 | Recommend | 📺 | Video content |
 | 📑 |  Academic paper | 🤗 | Huggingface |
-
-> **Info:** Applications that have been archived or have had no commits for more than 12 months are listed in [applications.old.md](section/applications.old.md).
 
 <!-- 
 All rights reserved © `kimtth` 
