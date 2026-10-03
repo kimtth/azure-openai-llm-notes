@@ -1301,6 +1301,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [Harnessing the Reasoning Economy: Efficient Reasoning for Large Language Models📑](https://arxiv.org/abs/2503.24377): Efficient reasoning mechanisms that balance computational cost with performance. [31 Mar 2025]
 - [In-context Learning📑](https://arxiv.org/abs/2301.00234):[31 Dec 2022]
 - [Large Language Model-Brained GUI Agents: A Survey📑](https://arxiv.org/abs/2411.18279) [27 Nov 2024]
+- [LLM Agents: A Survey📑](https://www.preprints.org/manuscript/202608.0265/v1) [Aug 2026]
 - [LLM-as-a-Judge📑](https://arxiv.org/abs/2411.15594) [23 Nov 2024]
 - [LLM-based Autonomous Agents📑](https://arxiv.org/abs/2308.11432v1):[22 Aug 2023]
 - [LLM-Driven AI Agent Communication: Protocols, Security Risks, and Defense Countermeasures📑](https://arxiv.org/abs/2506.19676) [24 Jun 2025]
@@ -1332,6 +1333,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [Summary of ChatGPT/GPT-4 Research and Perspective Towards the Future of Large Language Models📑](https://arxiv.org/abs/2304.01852)
 - [Tabular Data Understanding with LLMs: Recent Advances and Challenges](https://arxiv.org/abs/2508.00217) [31 Jul 2025]
 - [Techniques for Optimizing Transformer Inference📑](https://arxiv.org/abs/2307.07982):[16 Jul 2023]
+- [The Agent Loop: A Survey of Control Strategies, Skills, and Harnesses for LLM Agents📑](https://ssrn.com/abstract=7186738) [Aug 2026]
 - [The Rise and Potential of Large Language Model Based Agents: A Survey📑](https://arxiv.org/abs/2309.07864) [14 Sep 2023]
 - [Thinking Machines: LLM based Reasoning Strategies📑](https://arxiv.org/abs/2503.10814) [13 Mar 2025]
 - [Towards Artificial General or Personalized Intelligence? 📑](https://arxiv.org/abs/2505.06907): Personalized federated intelligence (PFI). Foundation Model Meets Federated Learning [11 May 2025]
