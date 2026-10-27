@@ -1,3 +1,15 @@
+"""Collect foundational LLM, RAG, and agent papers from Semantic Scholar.
+
+Foundational papers are resolved by stable arXiv IDs in both discovery and
+--refresh-existing mode, which otherwise only revisits the existing entries.
+Search results are ranked by citations at the API, not just within a relevance page.
+
+Monthly use: run normally for discovery, or use --refresh-existing for citation
+counts only. Successful responses persist in .cache/semantic-scholar for the
+current UTC month. Repeating a command retries only uncached requests. Both paper
+scripts share request pacing and cooldowns; run them sequentially.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -11,6 +23,20 @@ from pathlib import Path
 import requests
 from utils.http_utils import create_session
 from utils.path_utils import get_repo_root
+from utils.semantic_scholar import RateLimitDeferred, SemanticScholarSession
+
+
+FOUNDATION_TOPIC = "Foundational LLMs & Transformers"
+FOUNDATION_IDS = [
+    "ARXIV:1706.03762",  # Attention Is All You Need
+    "ARXIV:1810.04805",  # BERT
+    "ARXIV:1910.10683",  # T5
+    "ARXIV:2005.14165",  # GPT-3
+    "ARXIV:2203.02155",  # InstructGPT
+    "ARXIV:2302.13971",  # LLaMA
+    "ARXIV:2307.09288",  # Llama 2
+]
+OUTPUT_TITLE = "# Popular Papers on Foundational LLMs, RAG & AI Agents (Computer Science)"
 
 
 def infer_arxiv_date(arxiv_id: str) -> tuple[int, int] | None:
@@ -44,8 +70,12 @@ class SemanticScholarFetcher:
         backoff: float,
         request_delay: float,
         jitter: float,
+        cache_dir: Path | None = None,
     ):
-        self.session = create_session(user_agent)
+        self.session = (
+            SemanticScholarSession(cache_dir, request_delay=request_delay, jitter=jitter, user_agent=user_agent)
+            if cache_dir is not None else create_session(user_agent)
+        )
         if api_key:
             self.session.headers.update({"x-api-key": api_key})
         self.timeout = timeout
@@ -57,6 +87,8 @@ class SemanticScholarFetcher:
         self._next_request_at = 0.0
 
     def _wait_for_request_slot(self) -> None:
+        if isinstance(self.session, SemanticScholarSession):
+            return
         wait = self._next_request_at - time.monotonic()
         if wait > 0:
             time.sleep(wait)
@@ -90,23 +122,27 @@ class SemanticScholarFetcher:
 
         params = {
             "query": query,
-            "limit": min(limit, 100),
             "fields": ",".join(fields),
+            "sort": "citationCount:desc",
+            "fieldsOfStudy": "Computer Science",
         }
 
-        url = f"{self.BASE_URL}/paper/search"
+        url = f"{self.BASE_URL}/paper/search/bulk"
         backoff = self.backoff
         last_error = "no response"
+        last_status = None
 
         for attempt in range(self.max_retries):
             try:
                 self._wait_for_request_slot()
                 response = self.session.get(url, params=params, timeout=self.timeout)
             except requests.RequestException as exc:
+                last_status = None
                 last_error = f"{type(exc).__name__}: {exc}"
             else:
+                last_status = response.status_code
                 if response.status_code == 200:
-                    return response.json().get("data", [])
+                    return response.json().get("data", [])[:limit]
 
                 message = ""
                 try:
@@ -135,7 +171,8 @@ class SemanticScholarFetcher:
                 time.sleep(backoff)
                 backoff = min(backoff * 2, 300.0)
 
-        raise RuntimeError(f"Semantic Scholar query failed after retries ({last_error}): {query}")
+        error = RateLimitDeferred if last_status == 429 else RuntimeError
+        raise error(f"Semantic Scholar query failed after retries ({last_error}): {query}")
 
     def batch_papers(self, ids: list[str], fields: list[str] | None = None) -> list[dict | None]:
         """Fetch papers by stable IDs in one low-volume API request."""
@@ -153,8 +190,8 @@ class SemanticScholarFetcher:
                 "fieldsOfStudy",
             ]
 
-        if len(ids) == 1:
-            return [self.get_paper(ids[0], fields)]
+        if not ids:
+            return []
 
         url = f"{self.BASE_URL}/paper/batch"
         params = {"fields": ",".join(fields)}
@@ -338,6 +375,37 @@ def paper_lookup_id(paper: dict) -> str | None:
     return None
 
 
+def fetch_foundational_papers(
+    fetcher: SemanticScholarFetcher,
+    min_citations: int,
+    existing: list[dict] | None = None,
+) -> list[dict]:
+    known = {paper_lookup_id(paper): paper for paper in existing or []}
+    missing_ids = [identifier for identifier in FOUNDATION_IDS if identifier not in known]
+    known_ids = [identifier for identifier in FOUNDATION_IDS if identifier in known]
+    for identifiers, fields in [(missing_ids, None), (known_ids, ["citationCount"])]:
+        if not identifiers:
+            continue
+        records = (
+            fetcher.batch_papers(identifiers) if fields is None
+            else fetcher.batch_papers(identifiers, fields=fields)
+        )
+        if len(records) != len(identifiers):
+            raise RuntimeError("Could not resolve every foundational paper; leaving output unchanged.")
+        for identifier, record in zip(identifiers, records):
+            if record is None:
+                raise RuntimeError("Could not resolve every foundational paper; leaving output unchanged.")
+            known[identifier] = {**known.get(identifier, {}), **record}
+    papers = [known[identifier] for identifier in FOUNDATION_IDS]
+    filtered = [
+        paper for paper in papers
+        if paper is not None
+        and paper.get("citationCount", 0) >= min_citations
+        and "Computer Science" in (paper.get("fieldsOfStudy") or [])
+    ]
+    return sorted(filtered, key=lambda paper: paper.get("citationCount", 0), reverse=True)
+
+
 def parse_existing_markdown(filename: str) -> list[tuple[str, list[dict]]]:
     text = Path(filename).read_text(encoding="utf-8")
     sections: list[tuple[str, list[dict]]] = []
@@ -382,7 +450,25 @@ def refresh_existing_markdown(
     batch_size: int,
 ) -> None:
     sections = parse_existing_markdown(filename)
-    lookup_ids = [paper_lookup_id(paper) for _, papers in sections for paper in papers]
+    if not sections or not any(papers for _, papers in sections):
+        raise RuntimeError(f"No paper sections found in {filename}; leaving output unchanged.")
+    existing_foundations = {
+        paper_lookup_id(paper)
+        for topic, entries in sections if topic == FOUNDATION_TOPIC for paper in entries
+    }
+    if set(FOUNDATION_IDS).issubset(existing_foundations):
+        foundations = []
+    else:
+        foundations = fetch_foundational_papers(
+            fetcher, min_citations,
+            [paper for topic, entries in sections if topic == FOUNDATION_TOPIC for paper in entries],
+        )
+    if not any(topic == FOUNDATION_TOPIC for topic, _ in sections):
+        sections.insert(0, (FOUNDATION_TOPIC, []))
+    lookup_ids = list(dict.fromkeys(
+        paper_lookup_id(paper) for _, papers in sections for paper in papers
+        if paper_lookup_id(paper)
+    ))
     live_by_id: dict[str, dict | None] = {}
 
     for start in range(0, len(lookup_ids), batch_size):
@@ -390,7 +476,7 @@ def refresh_existing_markdown(
         if not chunk:
             continue
         print(f"[batch] Fetching {len(chunk)} papers ({start + 1}-{start + len(chunk)})")
-        live_by_id.update(zip(chunk, fetcher.batch_papers(chunk)))
+        live_by_id.update(zip(chunk, fetcher.batch_papers(chunk, fields=["citationCount"])))
 
     refreshed_sections: list[tuple[str, list[dict]]] = []
     changed = 0
@@ -403,10 +489,14 @@ def refresh_existing_markdown(
             if live:
                 if live.get("citationCount") != paper.get("citationCount"):
                     changed += 1
-                refreshed.append(live)
+                refreshed.append({**paper, **live})
             else:
                 missing += 1
                 refreshed.append(paper)
+        if topic_name == FOUNDATION_TOPIC:
+            by_id = {paper_lookup_id(paper): paper for paper in refreshed}
+            by_id.update({paper_lookup_id(paper): paper for paper in foundations})
+            refreshed = list(by_id.values())
         filtered = [
             paper for paper in refreshed
             if paper.get("citationCount", 0) >= min_citations
@@ -416,10 +506,13 @@ def refresh_existing_markdown(
         refreshed_sections.append((topic_name, filtered))
 
     with open(filename, "w", encoding="utf-8") as f:
-        f.write("# Popular Papers on RAG & AI Agents (Computer Science)\n\n")
+        f.write(f"{OUTPUT_TITLE}\n\n")
         f.write(f"*Generated: {datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S')}*\n")
         f.write("*Source: Semantic Scholar batch API refresh of existing paper IDs*\n")
         f.write("*Filtered for Computer Science papers only*\n")
+        f.write("*Includes foundational LLM papers resolved by stable arXiv IDs.*\n")
+        if missing:
+            f.write(f"*Warning: {missing} existing entries could not be refreshed and retain previously recorded data.*\n")
 
     for topic_name, papers in refreshed_sections:
         save_to_markdown(topic_name, papers, filename)
@@ -431,7 +524,7 @@ def refresh_existing_markdown(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Fetch top-cited RAG/agent papers from Semantic Scholar.")
+    parser = argparse.ArgumentParser(description="Fetch foundational LLM and top-cited RAG/agent papers from Semantic Scholar.")
     parser.add_argument("--output", help="Output markdown file path.")
     parser.add_argument("--min-citations", type=int, default=100, help="Minimum citation threshold.")
     parser.add_argument("--top-n", type=int, default=30, help="Top N papers per query.")
@@ -439,8 +532,8 @@ def main() -> None:
     parser.add_argument("--max-retries", type=int, default=5, help="Max retries for API calls.")
     parser.add_argument("--backoff", type=float, default=1.0, help="Initial backoff in seconds.")
     parser.add_argument(
-        "--request-delay", type=float, default=2.0,
-        help="Delay between Semantic Scholar requests in seconds."
+        "--request-delay", type=float, default=5.0,
+        help="Delay between Semantic Scholar requests in seconds (default: 5)."
     )
     parser.add_argument(
         "--jitter", type=float, default=0.5,
@@ -452,15 +545,21 @@ def main() -> None:
     )
     parser.add_argument(
         "--refresh-existing", action="store_true",
-        help="Refresh existing output entries from Semantic Scholar batch API without running search queries."
+        help="Refresh citation counts only, preserving existing metadata and skipping discovery."
     )
     parser.add_argument(
-        "--batch-size", type=int, default=50,
-        help="Number of papers per refresh request (default: 50; lower values reduce unauthenticated API pressure)."
+        "--batch-size", type=int, default=20,
+        help="Number of papers per refresh request (default: 20)."
     )
+    parser.add_argument("--cache-dir", type=Path, help="Shared monthly API cache (default: .cache/semantic-scholar).")
     parser.add_argument("--user-agent", default="Academic-Research-Tool/1.0", help="Custom User-Agent.")
     args = parser.parse_args()
+    if args.batch_size < 1 or args.top_n < 1 or args.min_citations < 0:
+        parser.error("--batch-size and --top-n must be positive; --min-citations must be non-negative.")
+    if args.max_retries < 1 or args.request_delay < 1 or args.jitter < 0 or args.backoff < 0:
+        parser.error("--max-retries and --request-delay must be at least 1; --jitter and --backoff must be non-negative.")
 
+    root_dir = get_repo_root(__file__)
     fetcher = SemanticScholarFetcher(
         user_agent=args.user_agent,
         api_key=os.environ.get(args.api_key_env),
@@ -469,9 +568,9 @@ def main() -> None:
         backoff=args.backoff,
         request_delay=args.request_delay,
         jitter=args.jitter,
+        cache_dir=args.cache_dir or root_dir / ".cache" / "semantic-scholar",
     )
 
-    root_dir = get_repo_root(__file__)
     output_file = args.output or str(root_dir / "section" / "x_popular_papers.md")
 
     if args.refresh_existing:
@@ -480,20 +579,25 @@ def main() -> None:
 
     topics = {
         "RAG (Retrieval-Augmented Generation)": [
-            "Retrieval-Augmented Generation",
-            "RAG language models",
-            "retrieval augmented generation",
-            "RAG"
+            '"retrieval-augmented generation"',
+            '"RAG" "language models"',
+            '"retrieval augmented generation"',
+            '"retrieval augmented" "language models"',
         ],
         "AI Agents": [
-            "AI agents",
-            "LLM agents",
-            "LM Agents",
-            "LLM agent"
+            '"AI agents" "language models"',
+            '"LLM agents"',
+            '"language model" "agents"',
+            '"LLM agent"',
         ]
     }
     
-    topic_papers = []
+    existing_foundations = [
+        paper for topic, entries in parse_existing_markdown(output_file) if topic == FOUNDATION_TOPIC
+        for paper in entries
+    ] if Path(output_file).exists() else []
+    topic_papers = [(FOUNDATION_TOPIC, fetch_foundational_papers(fetcher, args.min_citations, existing_foundations))]
+    failed_searches: list[str] = []
     for topic_name, queries in topics.items():
         print(f"\nTopic: {topic_name}")
         
@@ -503,8 +607,14 @@ def main() -> None:
         for query in queries:
             try:
                 query_papers = fetcher.get_papers_sorted_by_citations(query, top_n=args.top_n, min_citations=args.min_citations)
+            except RateLimitDeferred as exc:
+                raise RateLimitDeferred(
+                    f"{exc}. Discovery paused; successful responses are saved in the monthly cache. "
+                    "Re-run this command later to resume. Existing Markdown is unchanged."
+                ) from exc
             except RuntimeError as exc:
                 failed_queries.append(str(exc))
+                failed_searches.append(query)
                 print(f"  [WARN] {exc}")
                 continue
 
@@ -513,12 +623,11 @@ def main() -> None:
                 if paper_id and paper_id not in seen_ids:
                     seen_ids.add(paper_id)
                     all_papers.append(paper)
-            if len(all_papers) >= args.top_n:
-                break
         
         # Filter and sort
         filtered_papers = [p for p in all_papers if p.get('citationCount', 0) >= args.min_citations]
         filtered_papers.sort(key=lambda x: x.get('citationCount', 0), reverse=True)
+        filtered_papers = filtered_papers[:args.top_n]
         if not filtered_papers:
             if failed_queries:
                 print("\n".join(f"  [ERROR] {error}" for error in failed_queries))
@@ -532,15 +641,26 @@ def main() -> None:
             print(format_paper_info(paper, idx))
         
     with open(output_file, 'w', encoding='utf-8') as f:
-        f.write("# Popular Papers on RAG & AI Agents (Computer Science)\n\n")
+        f.write(f"{OUTPUT_TITLE}\n\n")
         f.write(f"*Generated: {datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S')}*\n")
         f.write("*Filtered for Computer Science papers only*\n")
+        f.write("*Includes foundational LLM papers resolved by stable arXiv IDs.*\n")
+        if failed_searches:
+            f.write(
+                f"*Warning: {len(failed_searches)} discovery queries failed; "
+                "rankings use the successful queries only.*\n"
+            )
     
     for topic_name, filtered_papers in topic_papers:
         save_to_markdown(topic_name, filtered_papers, output_file)
         print(f"Saved {len(filtered_papers)} papers")
     
     print(f"\nResults saved to: {output_file}")
+    if failed_searches:
+        raise RuntimeError(
+            f"Partial discovery saved; {len(failed_searches)} queries remain pending. "
+            "Re-run this command to resume from the monthly cache."
+        )
 
 
 if __name__ == "__main__":

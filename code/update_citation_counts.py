@@ -1,68 +1,100 @@
-"""Update citation counts for papers in the Ranked by cite count sections."""
+"""Refresh ranked citations and add qualifying papers from the surrounding sections."""
 
 from __future__ import annotations
 
 import argparse
+import datetime
 import re
 import sys
-import time
 from pathlib import Path
 
 CODE_DIR = Path(__file__).resolve().parent
 if str(CODE_DIR) not in sys.path:
     sys.path.insert(0, str(CODE_DIR))
 
-from utils.http_utils import create_session, get_json
+from fetch_llm_papers import QueryFetchError, SemanticScholarFetcher
 from utils.path_utils import get_repo_root
+from utils.semantic_scholar import SemanticScholarSession
 
 
-def get_citation_count(
-    arxiv_id: str,
-    *,
-    session,
-    timeout: int,
-    max_retries: int,
-    backoff: float,
-) -> int | None:
-    """Fetch citation count from Semantic Scholar API."""
-    url = f"https://api.semanticscholar.org/graph/v1/paper/arXiv:{arxiv_id}"
-    params = {"fields": "citationCount"}
+SECTION_RANGES = (
+    ("## **RAG Best Practices**", "## **Agent Best Practices**", "RAG Research (Ranked by cite count >=100)"),
+    ("## **Agent Best Practices**", "### **Security and Governance**", "Agent Research (Ranked by cite count >=100)"),
+)
 
-    data = get_json(
-        session,
-        url,
-        params=params,
-        timeout=timeout,
-        max_retries=max_retries,
-        backoff=backoff,
-    )
-    if not data:
-        return None
-    return data.get("citationCount", 0)
 
 def extract_papers_from_ranked_section(content: str, section_name: str) -> list[tuple[str, str, int, str, str]]:
     """Extract papers from a ranked section."""
     section_pattern = f'### \\*\\*{re.escape(section_name)}\\*\\*'
     section_match = re.search(section_pattern, content)
     if not section_match:
-        return []
+        raise ValueError(f"Ranked section not found: {section_name}")
     
     start = section_match.end()
-    next_section = re.search(r'\n(?:###|---)', content[start:])
+    next_section = re.search(r'\n(?:#{2,3} |---(?:\s|$))', content[start:])
     section_content = content[start:start + next_section.start()] if next_section else content[start:]
     
-    paper_pattern = r'^-\s+\[([^\]]*?)📑(?:💡)?\]\(https://arxiv\.org/abs/(\d{4}\.\d{4,5})\):[^\n]+\(Citations:\s*([\d,]+)\)'
-    
-    return [
-        (
-            match.group(1),
-            match.group(2),
-            int(match.group(3).replace(",", "")),
-            match.group(3),
-            match.group(0),
-        )
-        for match in re.finditer(paper_pattern, section_content, re.MULTILINE)
-    ]
+    paper_pattern = (
+        r'^-\s+\[([^\]]*?)📑(?:💡)?\]\(https://(?:arxiv\.org/abs/'
+        r'(?P<arxiv>\d{4}\.\d{4,5})|(?:www\.)?semanticscholar\.org/paper/'
+        r'(?P<semantic>[a-fA-F0-9]{40}))\):[^\n]*\(Citations:\s*([\d,]+)\)'
+    )
+    papers = []
+    for match in re.finditer(paper_pattern, section_content, re.MULTILINE):
+        identifier = f"ARXIV:{match.group('arxiv')}" if match.group("arxiv") else match.group("semantic")
+        count_text = match.group(4)
+        papers.append((match.group(1), identifier, int(count_text.replace(",", "")), count_text, match.group(0)))
+    citation_lines = re.findall(r"^.*\(Citations:\s*[\d,]+\).*$", section_content, re.MULTILINE)
+    if len(citation_lines) != len(papers):
+        raise ValueError(f"{section_name} contains citation entries with unsupported or malformed links.")
+    return papers
+
+
+def extract_source_papers(content: str, start_heading: str, end_heading: str) -> list[tuple[str, str]]:
+    """Return source paper IDs and normalized entries outside the ranked sections."""
+    start = content.find(start_heading)
+    end = content.find(end_heading, start + len(start_heading)) if start >= 0 else -1
+    if start < 0 or end < 0:
+        raise ValueError(f"Could not find source section between {start_heading!r} and {end_heading!r}.")
+    block = content[start + len(start_heading):end]
+    block = re.sub(
+        r"### \*\*(?:RAG|Agent) Research \(Ranked by cite count >=100\)\*\*[\s\S]*?(?=\n### |\n## |\Z)",
+        "", block,
+    )
+    papers: list[tuple[str, str]] = []
+    for line in block.splitlines():
+        match = re.match(r"^\s*(?:>\s*)?-\s+\[([^\]]*📑(?:💡)?)\]\(([^)]+)\)(.*)$", line)
+        if not match:
+            continue
+        title, link, description = match.groups()
+        arxiv = re.fullmatch(r"https://arxiv\.org/(?:abs|pdf|html)/(\d{4}\.\d{4,5})(?:\.pdf)?", link)
+        semantic = re.fullmatch(r"https://(?:www\.)?semanticscholar\.org/paper/([a-fA-F0-9]{40})", link)
+        if arxiv:
+            identifier = f"ARXIV:{arxiv.group(1)}"
+            link = f"https://arxiv.org/abs/{arxiv.group(1)}"
+        elif semantic:
+            identifier = semantic.group(1)
+        else:
+            raise ValueError(f"Paper link cannot be used for citation lookup: {link}")
+        description = description.strip()
+        if description.startswith(":"):
+            description = description[1:].strip()
+        elif description.startswith("- "):
+            description = description[2:].strip()
+        papers.append((identifier, f"- [{title}]({link}): {description}".rstrip()))
+    return papers
+
+
+def add_ranked_entries(content: str, section_name: str, entries: list[str]) -> str:
+    if not entries:
+        return content
+    heading = f"### **{section_name}**"
+    start = content.index(heading) + len(heading)
+    following = re.search(r"\n(?:#{2,3} |---(?:\s|$))", content[start:])
+    end = start + following.start() if following else len(content)
+    separator = "" if content[:end].endswith("\n") else "\n"
+    return content[:end] + separator + "\n".join(entries) + "\n" + content[end:]
+
 
 def sort_ranked_section(content: str, section_name: str) -> str:
     """Sort a ranked section in descending citation-count order."""
@@ -72,7 +104,7 @@ def sort_ranked_section(content: str, section_name: str) -> str:
         return content
 
     start = section_match.end()
-    next_section = re.search(r'\n(?:###|---)', content[start:])
+    next_section = re.search(r'\n(?:#{2,3} |---(?:\s|$))', content[start:])
     end = start + next_section.start() if next_section else len(content)
     section_lines = content[start:end].splitlines(keepends=True)
     citation_lines = [
@@ -104,74 +136,135 @@ def update_ranked_sections(
 
     content = file_path.read_text(encoding="utf-8")
     
-    sections = [
-        'RAG Research (Ranked by cite count >=100)',
-        'Agent Research (Ranked by cite count >=100)'
-    ]
+    sections = [ranked for _, _, ranked in SECTION_RANGES]
     
+    papers = [paper for section in sections for paper in extract_papers_from_ranked_section(content, section)]
+    if not papers:
+        raise ValueError(f"No ranked citation entries found in {file_path}.")
     replacements = []
-    total_papers = 0
-    
-    session = create_session("awesome-azure-openai-llm/1.0")
-
-    for section_name in sections:
-        papers = extract_papers_from_ranked_section(content, section_name)
-        total_papers += len(papers)
-
-        if sort_only:
-            continue
-
-        for idx, (title, arxiv_id, current_citations, current_citations_text, original_text) in enumerate(papers, 1):
-            print(f"[{idx}/{len(papers)}] Checking {arxiv_id}...", end='\r')
-            new_citations = get_citation_count(
-                arxiv_id,
-                session=session,
-                timeout=timeout,
-                max_retries=max_retries,
-                backoff=max(1.0, sleep_s),
-            )
-            
-            if new_citations is not None and new_citations != current_citations:
-                new_text = original_text.replace(
-                    f'(Citations: {current_citations_text})',
-                    f'(Citations: {new_citations:,})'
-                )
-                
-                replacements.append({
-                    'old': original_text,
-                    'new': new_text,
-                    'title': title,
-                    'arxiv_id': arxiv_id,
-                    'old_count': current_citations,
-                    'new_count': new_citations
-                })
-                print(f"[{idx}/{len(papers)}] {arxiv_id}: {current_citations} → {new_citations}")
-            
-            time.sleep(sleep_s)
-    
+    failure: QueryFetchError | None = None
+    missing: list[str] = []
+    additions: dict[str, list[str]] = {section: [] for section in sections}
     if not sort_only:
-        print(f"\nProcessed {total_papers} papers")
+        sources = {
+            ranked: extract_source_papers(content, start, end)
+            for start, end, ranked in SECTION_RANGES
+        }
+        ids = list(dict.fromkeys(
+            [paper[1] for paper in papers] +
+            [identifier for entries in sources.values() for identifier, _ in entries]
+        ))
+        fetcher = SemanticScholarFetcher(
+            user_agent="awesome-azure-openai-llm/1.0", api_key=None,
+            timeout=timeout, max_retries=max_retries, backoff=max(1.0, sleep_s),
+            request_delay=max(1.0, sleep_s), jitter=0,
+            cache_dir=get_repo_root(__file__) / ".cache" / "semantic-scholar",
+        )
+        try:
+            if not isinstance(fetcher.session, SemanticScholarSession):
+                raise TypeError("Citation refresh requires the shared Semantic Scholar cache.")
+            cached = fetcher.session.cached_papers(ids, ["citationCount"])
+            results: dict[str, dict | None] = dict(cached)
+            pending = [identifier for identifier in ids if identifier not in cached]
+            print(f"[cache] {len(cached)} IDs from the current UTC month; {len(pending)} to fetch.")
+            for start in range(0, len(pending), 500):
+                chunk = pending[start:start + 500]
+                try:
+                    fetched = fetcher.batch_papers(chunk, fields=["citationCount"])
+                except QueryFetchError as exc:
+                    failure = exc
+                    break
+                results.update(zip(chunk, fetched))
+        finally:
+            fetcher.session.close()
+
+        for title, identifier, current_citations, count_text, original_text in papers:
+            result = results.get(identifier)
+            if result is None:
+                continue
+            new_citations = result.get("citationCount")
+            if not isinstance(new_citations, int) or new_citations < 0:
+                raise ValueError(f"Invalid Semantic Scholar citation count for {identifier}.")
+            if new_citations != current_citations:
+                replacements.append({
+                    "old": original_text,
+                    "new": original_text.replace(f"(Citations: {count_text})", f"(Citations: {new_citations:,})"),
+                    "title": title,
+                    "id": identifier,
+                    "old_count": current_citations,
+                    "new_count": new_citations,
+                })
+        missing = [identifier for identifier in ids if results.get(identifier) is None]
+        for section in sections:
+            ranked = extract_papers_from_ranked_section(content, section)
+            known_ids = {paper[1] for paper in ranked}
+            known_paper_ids = {
+                (results.get(identifier) or {}).get("paperId") or identifier for identifier in known_ids
+            }
+            for identifier, entry in sources[section]:
+                result = results.get(identifier)
+                if result is None:
+                    continue
+                count = result.get("citationCount")
+                if not isinstance(count, int) or count < 0:
+                    raise ValueError(f"Invalid Semantic Scholar citation count for {identifier}.")
+                paper_id = result.get("paperId") or identifier
+                if count > 100 and identifier not in known_ids and paper_id not in known_paper_ids:
+                    additions[section].append(f"{entry} (Citations: {count:,})")
+                    known_ids.add(identifier)
+                    known_paper_ids.add(paper_id)
+        print(
+            f"Processed {len(papers)} ranked entries and {len(ids)} unique paper IDs; "
+            f"{len(missing)} unavailable."
+        )
 
     updated_content = content
     if replacements:
         print("\nUpdates needed:")
         for i, r in enumerate(replacements, 1):
-            print(f"{i}. {r['title'][:50]}... ({r['arxiv_id']}): {r['old_count']} → {r['new_count']}")
+            print(f"{i}. {r['id']}: {r['old_count']} -> {r['new_count']}")
         
         for r in replacements:
             updated_content = updated_content.replace(r['old'], r['new'])
 
+    for section_name, entries in additions.items():
+        updated_content = add_ranked_entries(updated_content, section_name, entries)
     for section_name in sections:
         updated_content = sort_ranked_section(updated_content, section_name)
 
-    if updated_content == content:
-        print("✓ All up to date")
+    if not sort_only:
+        month = datetime.datetime.now(datetime.UTC).strftime("%Y-%m")
+        status = (
+            f"*Citation status: {len(ids) - len(missing)}/{len(ids)} paper IDs checked against Semantic Scholar "
+            f"in {month} UTC (including monthly cache); {len(missing)} unavailable."
+        )
+        if missing:
+            status += " Previous counts are retained and qualifying papers may be missing."
+        status += "*"
+        status_pattern = r"^\*Citation status: [^\n]*\*\n+"
+        updated_content = re.sub(status_pattern, "", updated_content, flags=re.MULTILINE)
+        title_end = updated_content.find("\n")
+        if title_end < 0:
+            raise ValueError(f"Cannot insert citation status into {file_path}.")
+        updated_content = updated_content[:title_end + 1] + "\n" + status + "\n" + updated_content[title_end + 1:]
+
+    if updated_content == content and not missing:
+        print("All up to date")
     elif dry_run:
         print("\nDRY RUN: No files written.")
-    else:
+    elif updated_content != content:
         file_path.write_text(updated_content, encoding="utf-8")
-        print(f"\n✓ Updated {len(replacements)} papers and re-sorted ranked sections")
+        print(
+            f"\nUpdated {len(replacements)} citation counts, added "
+            f"{sum(len(entries) for entries in additions.values())} qualifying papers, "
+            "and re-sorted ranked sections"
+        )
 
+    if missing:
+        print(f"[WARN] Citation counts retained for unavailable IDs: {', '.join(missing)}")
+        if failure:
+            raise QueryFetchError(f"Partial citation refresh: {failure}") from failure
+        raise QueryFetchError(f"Partial citation refresh: {len(missing)} paper(s) unavailable.")
     return len(replacements)
 
 
@@ -183,7 +276,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--timeout", type=int, default=10, help="Request timeout in seconds.")
     parser.add_argument("--max-retries", type=int, default=3, help="Max retries for API calls.")
-    parser.add_argument("--sleep", type=float, default=0.5, help="Sleep between API calls in seconds.")
+    parser.add_argument("--sleep", type=float, default=10.0, help="Delay between API requests in seconds.")
     parser.add_argument("--dry-run", action="store_true", help="Preview updates without writing.")
     parser.add_argument("--sort-only", action="store_true", help="Re-sort ranked sections without calling the API.")
     return parser
