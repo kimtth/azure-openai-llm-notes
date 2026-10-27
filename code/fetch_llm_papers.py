@@ -3,12 +3,24 @@
 Captures survey, research, and position papers across all major LLM topic areas derived
 from the curated hint list in the awesome-azure-openai-llm knowledge base.
 Only Computer Science papers with >= --min-citations citations are included.
+Discovery for LLM Architecture Innovations also resolves the original
+Transformer paper by its stable arXiv ID, even if a keyword search misses it.
 
 Usage:
     python code/fetch_llm_papers.py
     python code/fetch_llm_papers.py --min-citations 200 --top-n 20
     python code/fetch_llm_papers.py --output files/llm_papers.md
     python code/fetch_llm_papers.py --topics "Reasoning" "Agents"
+    python code/fetch_llm_papers.py --discover-popular
+
+Monthly updates cache successful API responses in .cache/semantic-scholar.
+Use --refresh-existing for citation-only updates; repeat the same command to
+resume outstanding IDs, even if citation changes reorder the Markdown entries.
+The cache expires each UTC calendar month. Run the two paper scripts sequentially;
+their shared cache also coordinates request pacing and rate-limit cooldowns.
+--discover-popular merges the existing popular-paper list and citation-ranked
+searches into the landscape without removing existing papers. It saves progress
+after each query; rerun it to resume cached successes if an API request fails.
 """
 from __future__ import annotations
 
@@ -28,6 +40,7 @@ from typing import ClassVar
 import requests
 from utils.http_utils import create_session
 from utils.path_utils import get_repo_root
+from utils.semantic_scholar import SemanticScholarSession
 
 # ---------------------------------------------------------------------------
 # Topic → query mapping
@@ -342,6 +355,7 @@ TOPICS: dict[str, list[str]] = {
         "scaling language models methods analysis insights",
     ],
     "LLM Architecture Innovations": [
+        "attention is all you need",
         "flash attention efficient exact attention IO-awareness",
         "Mamba linear time sequence modeling selective state spaces",
         "RWKV parallelizable RNN language models transformer",
@@ -363,6 +377,21 @@ TOPICS: dict[str, list[str]] = {
         "catastrophic forgetting neural networks continual learning",
         "parameter merging multi-task language models",
     ],
+}
+
+FOUNDATIONAL_ARCHITECTURE_IDS = ("ARXIV:1706.03762",)
+
+POPULAR_DISCOVERY_QUERIES: dict[str, list[str]] = {
+    "LLM Overview & History": ['"language model"', '"foundation model"'],
+    "LLM Architecture Innovations": ['"transformer" +"language"', '"transformer" +"attention" +"language"'],
+    "Retrieval-Augmented Generation (RAG)": ['"retrieval augmented generation"', '"retrieval augmented language"'],
+    "LLM Agents": ['"language model" +"agent"', '"language agent"'],
+}
+
+POPULAR_SOURCE_TOPICS = {
+    "Foundational LLMs & Transformers": ("LLM Architecture Innovations", "LLM Overview & History"),
+    "RAG (Retrieval-Augmented Generation)": ("Retrieval-Augmented Generation (RAG)",),
+    "AI Agents": ("LLM Agents",),
 }
 
 
@@ -449,7 +478,8 @@ TOPIC_KEYWORDS: dict[str, tuple[str, ...]] = {
     ),
     "Scaling Laws": ("scaling law", "scaling laws", "compute-optimal", "chinchilla", "emergent abilities"),
     "LLM Architecture Innovations": (
-        "architecture", "attention", "mamba", "rwkv", "rope", "gqa", "state space", "retnet", "kv cache",
+        "architecture", "attention", "transformer", "mamba", "rwkv", "rope", "gqa", "state space",
+        "retnet", "kv cache",
     ),
     "Continual Learning & Model Merging": (
         "continual", "catastrophic forgetting", "model merging", "model soup", "knowledge editing", "lifelong",
@@ -542,6 +572,44 @@ def _is_relevant_paper(paper: dict, topic: str) -> bool:
     return _topic_score(paper, topic) > 0
 
 
+_DISCOVERY_TITLE_LANGUAGE = re.compile(
+    r"\b(?:languages?|texts?|linguistic|nlp|llms?|gpt(?:-?\d+)?|chatgpt|bert|roberta|"
+    r"llama|qwen|deepseek|t5|tokenization|retrieval[- ]augmented|rag|"
+    r"translation|question answering|prompting|in-context learning)\b",
+    re.IGNORECASE,
+)
+_DISCOVERY_ABSTRACT_LANGUAGE = re.compile(
+    r"\b(?:language model(?:s|ing|ling)?|language agents?|large language|llms?|"
+    r"gpt(?:-?\d+)?|chatgpt|bert|roberta|llama|qwen|deepseek|"
+    r"natural language processing|machine translation|vision[- ]language|"
+    r"retrieval[- ]augmented generation|text generation|question answering)\b",
+    re.IGNORECASE,
+)
+_DISCOVERY_OTHER_DOMAIN = re.compile(
+    r"\b(?:images?|vision|visual|video|segmentation|object detection|"
+    r"time[- ]series|forecasting|gan|gans|generative adversarial|graph|"
+    r"recommendation|robot|tracking|medical)\b",
+    re.IGNORECASE,
+)
+_DISCOVERY_GENERAL_ARCHITECTURE = re.compile(
+    r"\b(?:transformers?|attention)\b",
+    re.IGNORECASE,
+)
+
+
+def _is_language_discovery(paper: dict) -> bool:
+    """Require language relevance, not just background mentions in unrelated work."""
+    title = str(paper.get("title") or "")
+    abstract = str(paper.get("abstract") or "")
+    if _DISCOVERY_TITLE_LANGUAGE.search(title):
+        return True
+    if _DISCOVERY_OTHER_DOMAIN.search(title):
+        return False
+    if abstract and _DISCOVERY_GENERAL_ARCHITECTURE.search(title):
+        return True
+    return bool(_DISCOVERY_ABSTRACT_LANGUAGE.search(abstract))
+
+
 class QueryFetchError(RuntimeError):
     """Raised when a Semantic Scholar query cannot be fetched after retries."""
 
@@ -586,8 +654,12 @@ class SemanticScholarFetcher:
         backoff: float,
         request_delay: float,
         jitter: float,
+        cache_dir: Path | None = None,
     ) -> None:
-        self.session = create_session(user_agent)
+        self.session = (
+            SemanticScholarSession(cache_dir, request_delay=request_delay, jitter=jitter, user_agent=user_agent)
+            if cache_dir is not None else create_session(user_agent)
+        )
         if api_key:
             self.session.headers.update({"x-api-key": api_key})
         self.timeout = timeout
@@ -600,6 +672,8 @@ class SemanticScholarFetcher:
         self._next_request_at = 0.0
 
     def _wait_for_request_slot(self) -> None:
+        if isinstance(self.session, SemanticScholarSession):
+            return
         wait = self._next_request_at - time.monotonic()
         if wait > 0:
             time.sleep(wait)
@@ -615,13 +689,16 @@ class SemanticScholarFetcher:
             time.monotonic() + backoff + random.uniform(0, max(self.jitter, 0)),
         )
 
-    def search_papers(self, query: str, limit: int = 100) -> list[dict]:
-        params = {
+    def search_papers(self, query: str, limit: int = 100, *, citation_ranked: bool = False) -> list[dict]:
+        params: dict[str, str | int] = {
             "query": query,
-            "limit": min(limit, 100),
             "fields": ",".join(self._FIELDS),
         }
-        url = f"{self.BASE_URL}/paper/search"
+        if citation_ranked:
+            params.update({"sort": "citationCount:desc", "fieldsOfStudy": "Computer Science"})
+        else:
+            params["limit"] = min(limit, 100)
+        url = f"{self.BASE_URL}/paper/search" + ("/bulk" if citation_ranked else "")
         backoff = self.backoff
         last_error = "no response"
 
@@ -633,7 +710,7 @@ class SemanticScholarFetcher:
                 last_error = f"{type(exc).__name__}: {exc}"
             else:
                 if response.status_code == 200:
-                    return response.json().get("data", [])
+                    return response.json().get("data", [])[:limit]
 
                 message = ""
                 try:
@@ -664,13 +741,13 @@ class SemanticScholarFetcher:
 
         raise QueryFetchError(f"Semantic Scholar query failed after retries ({last_error}): {query}")
 
-    def batch_papers(self, ids: list[str]) -> list[dict | None]:
+    def batch_papers(self, ids: list[str], *, fields: list[str] | None = None) -> list[dict | None]:
         """Fetch papers by stable IDs in one low-volume API request."""
         if not ids:
             return []
 
         url = f"{self.BASE_URL}/paper/batch"
-        params = {"fields": ",".join(self._FIELDS)}
+        params = {"fields": ",".join(self._FIELDS if fields is None else fields)}
         backoff = self.backoff
         last_error = "no response"
 
@@ -759,10 +836,12 @@ class SemanticScholarFetcher:
         for paper in filtered:
             paper["topics"] = list(dict.fromkeys([*(paper.get("topics") or []), topic]))
 
-        if failed_queries:
-            raise TopicFetchIncomplete(topic, filtered[:top_n], failed_queries)
+        selected = filtered[:top_n] if top_n else filtered
 
-        return filtered[:top_n]
+        if failed_queries:
+            raise TopicFetchIncomplete(topic, selected, failed_queries)
+
+        return selected
 
 
 # ---------------------------------------------------------------------------
@@ -941,14 +1020,40 @@ def refresh_existing_papers(
         print(f"No compact paper entries found in: {output_file}")
         return
 
+    output_path = Path(output_file)
+    discovery_note = None
+    if output_path.exists():
+        match = re.search(
+            r"^\*(Popular-paper discovery[^\n]*)\* *$",
+            output_path.read_text(encoding="utf-8"),
+            re.MULTILINE,
+        )
+        if match:
+            discovery_note = match.group(1)
+
     lookup_ids = [_paper_lookup_id(paper) for paper in existing_papers]
     refreshed_by_id: dict[str, dict | None] = {}
-    for start in range(0, len(lookup_ids), batch_size):
-        chunk = [paper_id for paper_id in lookup_ids[start:start + batch_size] if paper_id]
-        if not chunk:
-            continue
+    if isinstance(fetcher.session, SemanticScholarSession):
+        cached = fetcher.session.cached_papers(
+            [paper_id for paper_id in lookup_ids if paper_id], ["citationCount"],
+        )
+        refreshed_by_id.update(cached)
+        print(f"[cache] Found citation data for {len(cached)} existing paper IDs.")
+    pending = list(dict.fromkeys(
+        paper_id for paper_id in lookup_ids if paper_id and paper_id not in refreshed_by_id
+    ))
+    failure: QueryFetchError | None = None
+    for start in range(0, len(pending), batch_size):
+        chunk = pending[start:start + batch_size]
         print(f"[batch] Fetching {len(chunk)} papers ({start + 1}-{start + len(chunk)})")
-        results = fetcher.batch_papers(chunk)
+        try:
+            results = fetcher.batch_papers(chunk, fields=["citationCount"])
+        except QueryFetchError as exc:
+            if not any(refreshed_by_id.values()):
+                raise
+            print(f"  [WARN] {exc}; saving successful updates and retaining unavailable counts.")
+            failure = exc
+            break
         refreshed_by_id.update(zip(chunk, results))
 
     refreshed: list[dict] = []
@@ -957,6 +1062,7 @@ def refresh_existing_papers(
     for original, lookup_id in zip(existing_papers, lookup_ids):
         live = refreshed_by_id.get(lookup_id or "")
         if live:
+            live = {**original, **live}
             topics = original.get("topics") or infer_paper_topics(original)
             live["topics"] = topics
             refreshed.append(live)
@@ -967,11 +1073,19 @@ def refresh_existing_papers(
             missing += 1
 
     refreshed = [paper for paper in refreshed if paper.get("citationCount", 0) >= min_citations]
-    _flush_output(output_file, refreshed, min_citations)
+    refresh_note = f"Citation data refreshed for {len(existing_papers) - missing} existing entries."
+    if missing:
+        refresh_note += f" Warning: {missing} unavailable entries retain previously recorded citation counts."
+    _flush_output(
+        output_file, refreshed, min_citations,
+        refresh_note=refresh_note, discovery_note=discovery_note,
+    )
     print(
         f"Refreshed {len(refreshed)} existing papers from Semantic Scholar batch API: "
         f"{updated} citation count(s) changed, {missing} missing response(s)."
     )
+    if failure:
+        raise QueryFetchError(f"Partial citation refresh saved to {output_file}: {failure}") from failure
 
 
 def _load_existing_markdown(output_file: str, source_file: str | None = None) -> list[dict]:
@@ -998,6 +1112,99 @@ def _load_existing_markdown(output_file: str, source_file: str | None = None) ->
     return papers
 
 
+def merge_discovered_papers(
+    existing: list[dict],
+    candidates: list[dict],
+    topics: tuple[str, ...],
+    min_citations: int,
+) -> int:
+    """Append relevant, previously unseen candidates without changing existing records."""
+    identifiers = {_paper_lookup_id(paper) for paper in existing if _paper_lookup_id(paper)}
+    paper_ids = {paper.get("paperId") for paper in existing if paper.get("paperId")}
+    titles = {(paper.get("title") or "").strip().casefold() for paper in existing}
+    added = 0
+    for candidate in candidates:
+        citations = candidate.get("citationCount")
+        title = (candidate.get("title") or "").strip()
+        identifier = _paper_lookup_id(candidate)
+        paper_id = candidate.get("paperId") or identifier
+        matching_topics = [topic for topic in topics if _is_relevant_paper(candidate, topic)]
+        if (
+            not isinstance(citations, int) or citations < min_citations or not title or not paper_id
+            or not matching_topics or identifier in identifiers or paper_id in paper_ids
+            or title.casefold() in titles
+        ):
+            continue
+        paper = {**candidate, "paperId": paper_id, "topics": matching_topics}
+        existing.append(paper)
+        if identifier:
+            identifiers.add(identifier)
+        paper_ids.add(paper_id)
+        titles.add(title.casefold())
+        added += 1
+    return added
+
+
+def discover_popular_papers(
+    fetcher: SemanticScholarFetcher,
+    output_file: str,
+    popular_source: str,
+    min_citations: int,
+) -> None:
+    """Merge prior popular papers and citation-ranked discoveries into existing output."""
+    from fetch_popular_papers import parse_existing_markdown
+
+    existing = _load_existing_markdown(output_file)
+    if not existing:
+        raise ValueError(f"No landscape papers found in {output_file}; leaving output unchanged.")
+    source_sections = parse_existing_markdown(popular_source)
+    if not source_sections or not any(entries for _, entries in source_sections):
+        raise ValueError(f"No popular papers found in {popular_source}; leaving output unchanged.")
+    current_text = Path(output_file).read_text(encoding="utf-8")
+    previous_note = re.search(r"^\*(Citation data refreshed[^\n]*)\* *$", current_text, re.MULTILINE)
+    refresh_note = previous_note.group(1) if previous_note else None
+    imported = 0
+    for section, candidates in source_sections:
+        topics = POPULAR_SOURCE_TOPICS.get(section)
+        if topics:
+            imported += merge_discovered_papers(existing, candidates, topics, min_citations)
+    print(f"[popular source] Added {imported} previously omitted papers from {popular_source}")
+
+    total_queries = sum(len(queries) for queries in POPULAR_DISCOVERY_QUERIES.values())
+    completed = 0
+    discovered = 0
+
+    def save_progress(status: str) -> None:
+        note = (
+            f"Popular-paper discovery {status}; {completed}/{total_queries} citation-ranked queries completed. "
+            "Searches examine up to the first 1,000 results per query and include qualifying "
+            "records from the existing popular-paper list."
+        )
+        _flush_output(output_file, existing, min_citations, refresh_note=refresh_note, discovery_note=note)
+
+    save_progress("in progress")
+    for topic, queries in POPULAR_DISCOVERY_QUERIES.items():
+        for query in queries:
+            print(f"[citation-ranked search] {topic}: {query}")
+            try:
+                results = fetcher.search_papers(query, limit=1000, citation_ranked=True)
+            except QueryFetchError as exc:
+                save_progress("incomplete")
+                raise QueryFetchError(
+                    f"Popular-paper discovery paused at {query!r}; {completed}/{total_queries} queries "
+                    "completed. Existing and discovered records were saved; rerun --discover-popular to resume."
+                ) from exc
+            candidates = [paper for paper in results if _is_language_discovery(paper)]
+            added = merge_discovered_papers(existing, candidates, (topic,), min_citations)
+            discovered += added
+            completed += 1
+            print(f"  -> {added} new eligible papers")
+            save_progress("in progress")
+
+    save_progress("complete")
+    print(f"Popular discovery complete: {imported} imported, {discovered} found via citation-ranked search.")
+
+
 def _topic_counts(papers: list[dict]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for paper in papers:
@@ -1007,12 +1214,16 @@ def _topic_counts(papers: list[dict]) -> dict[str, int]:
 
 
 def _load_checkpoint(checkpoint_file: str) -> tuple[list[dict], set[str], list[str], dict[str, list[dict]], list[str]]:
-    """Load checkpoint with backward compatibility for older checkpoint files."""
+    """Load discovery progress only for the current UTC month."""
     path = Path(checkpoint_file)
     if not path.exists():
         return [], set(), [], {}, []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
+        period = datetime.datetime.now(datetime.UTC).strftime("%Y-%m")
+        if data.get("period") != period:
+            print("  [resume] Checkpoint is from an earlier or unknown month; starting current-month discovery.")
+            return [], set(), [], {}, []
         papers = data.get("papers", [])
         completed = data.get("completed_topics", [])
         query_cache = data.get("query_cache", {})
@@ -1037,6 +1248,7 @@ def _save_checkpoint(
 ) -> None:
     """Persist current state to checkpoint JSON."""
     data = {
+        "period": datetime.datetime.now(datetime.UTC).strftime("%Y-%m"),
         "completed_topics": completed_topics,
         "failed_queries": failed_queries,
         "query_cache": query_cache,
@@ -1045,7 +1257,14 @@ def _save_checkpoint(
     Path(checkpoint_file).write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
 
-def _flush_output(output_file: str, papers: list[dict], min_citations: int) -> list[str]:
+def _flush_output(
+    output_file: str,
+    papers: list[dict],
+    min_citations: int,
+    *,
+    refresh_note: str | None = None,
+    discovery_note: str | None = None,
+) -> list[str]:
     """Sort papers by citation count and rewrite the output markdown. Returns compact lines."""
     sorted_papers = sorted(papers, key=lambda p: p.get("citationCount", 0), reverse=True)
     compact_lines = [format_compact_entry(p, rank=i + 1) for i, p in enumerate(sorted_papers)]
@@ -1053,6 +1272,10 @@ def _flush_output(output_file: str, papers: list[dict], min_citations: int) -> l
         f.write(f"# LLM Landscape Papers (Citation \u2265 {min_citations})\n\n")
         f.write(f"*Generated: {datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%d %H:%M:%S UTC')}*  \n")
         f.write("*Source: Semantic Scholar API and local topic inference \u2014 Computer Science papers only*  \n")
+        if refresh_note:
+            f.write(f"*{refresh_note}*  \n")
+        if discovery_note:
+            f.write(f"*{discovery_note}*  \n")
         f.write(f"*Total papers: {len(sorted_papers)}*\n\n")
         counts = _topic_counts(sorted_papers)
         if counts:
@@ -1117,15 +1340,15 @@ def main() -> None:
         help="Minimum citation count (default: 150)."
     )
     parser.add_argument(
-        "--top-n", type=int, default=50,
-        help="Top N papers per topic (default: 50)."
+        "--top-n", type=int, default=0,
+        help="Maximum papers per topic; 0 keeps all eligible search results (default: 0)."
     )
     parser.add_argument("--timeout", type=int, default=30)
     parser.add_argument("--max-retries", type=int, default=5)
     parser.add_argument("--backoff", type=float, default=1.0)
     parser.add_argument(
-        "--request-delay", type=float, default=2.0,
-        help="Delay between Semantic Scholar requests in seconds (default: 2.0)."
+        "--request-delay", type=float, default=5.0,
+        help="Delay between Semantic Scholar requests in seconds (default: 5.0)."
     )
     parser.add_argument(
         "--jitter", type=float, default=0.5,
@@ -1153,17 +1376,32 @@ def main() -> None:
     )
     parser.add_argument(
         "--refresh-existing", action="store_true",
-        help="Refresh existing output entries from Semantic Scholar batch API without running search queries."
+        help="Refresh citation counts of existing entries using lightweight Semantic Scholar batches, preserving metadata."
     )
     parser.add_argument(
-        "--batch-size", type=int, default=100,
-        help="Number of papers per refresh request (default: 100; lower values reduce unauthenticated API pressure)."
+        "--discover-popular", action="store_true",
+        help="Merge the popular-paper list and citation-ranked searches into existing landscape output.",
     )
+    parser.add_argument(
+        "--popular-source",
+        help="Popular-paper Markdown source for --discover-popular (default: section/x_popular_papers.md).",
+    )
+    parser.add_argument(
+        "--batch-size", type=int, default=20,
+        help="Number of papers per refresh request (default: 20)."
+    )
+    parser.add_argument("--cache-dir", type=Path, help="Shared monthly API cache (default: .cache/semantic-scholar).")
     parser.add_argument(
         "--annotate-source",
         help="Optional markdown source for --annotate-existing; use '-' for stdin or 'git:<rev>:<path>'."
     )
     args = parser.parse_args()
+    if args.batch_size < 1 or args.top_n < 0 or args.min_citations < 0:
+        parser.error("--batch-size must be positive; --top-n and --min-citations must be non-negative.")
+    if args.discover_popular and (args.refresh_existing or args.annotate_existing or args.topics):
+        parser.error("--discover-popular cannot be combined with --refresh-existing, --annotate-existing, or --topics.")
+    if args.max_retries < 1 or args.request_delay < 1 or args.jitter < 0 or args.backoff < 0:
+        parser.error("--max-retries and --request-delay must be at least 1; --jitter and --backoff must be non-negative.")
 
     root_dir = get_repo_root(__file__)
     output_file = args.output or str(root_dir / "section" / "x_llm_papers.md")
@@ -1185,10 +1423,16 @@ def main() -> None:
         backoff=args.backoff,
         request_delay=args.request_delay,
         jitter=args.jitter,
+        cache_dir=args.cache_dir or root_dir / ".cache" / "semantic-scholar",
     )
 
     if args.refresh_existing:
         refresh_existing_papers(fetcher, output_file, args.min_citations, args.batch_size)
+        return
+
+    if args.discover_popular:
+        popular_source = args.popular_source or str(root_dir / "section" / "x_popular_papers.md")
+        discover_popular_papers(fetcher, output_file, popular_source, args.min_citations)
         return
 
     # Optionally filter topics
@@ -1220,19 +1464,48 @@ def main() -> None:
     def merge_papers(papers: list[dict], topic_name: str) -> int:
         added = 0
         by_id = {paper.get("paperId"): paper for paper in global_papers if paper.get("paperId")}
+        by_lookup_id = {
+            lookup_id: paper for paper in global_papers
+            if (lookup_id := _paper_lookup_id(paper))
+        }
         for paper in papers:
             pid = paper.get("paperId")
             if not pid:
                 continue
-            if pid in by_id:
-                existing_topics = by_id[pid].get("topics") or []
-                by_id[pid]["topics"] = list(dict.fromkeys([*existing_topics, topic_name]))
+            existing = by_id.get(pid) or by_lookup_id.get(_paper_lookup_id(paper) or "")
+            if existing is not None:
+                existing_topics = existing.get("topics") or []
+                existing["topics"] = list(dict.fromkeys([*existing_topics, topic_name]))
             elif pid not in global_seen:
                 paper["topics"] = list(dict.fromkeys([*(paper.get("topics") or []), topic_name]))
                 global_seen.add(pid)
                 global_papers.append(paper)
+                by_id[pid] = paper
+                lookup_id = _paper_lookup_id(paper)
+                if lookup_id:
+                    by_lookup_id[lookup_id] = paper
                 added += 1
         return added
+
+    if "LLM Architecture Innovations" in topics_to_run:
+        known_ids = {_paper_lookup_id(paper) for paper in global_papers}
+        missing_ids = [identifier for identifier in FOUNDATIONAL_ARCHITECTURE_IDS if identifier not in known_ids]
+        if missing_ids:
+            foundations = fetcher.batch_papers(missing_ids)
+            if len(foundations) != len(missing_ids):
+                raise QueryFetchError("Incomplete foundational architecture paper response; output unchanged.")
+            for identifier, paper in zip(missing_ids, foundations):
+                if (
+                    not paper or not paper.get("paperId") or _paper_lookup_id(paper) != identifier
+                    or "Computer Science" not in (paper.get("fieldsOfStudy") or [])
+                    or not isinstance(paper.get("citationCount"), int)
+                ):
+                    raise QueryFetchError(
+                        f"Invalid or missing foundational architecture paper {identifier}; output unchanged."
+                    )
+                if paper["citationCount"] >= args.min_citations:
+                    merge_papers([paper], "LLM Architecture Innovations")
+            persist_progress()
 
     # Collect all papers across every topic into a single deduplicated pool
     for topic_name, queries in topics_to_run.items():

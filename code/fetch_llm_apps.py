@@ -391,6 +391,8 @@ def format_compact_entry(repo: dict[str, Any], rank: int) -> str:
         entry += f" {date_str}"
 
     entry += f" (⭐ {repo.get('stars', 0):,})"
+    if repo.get("inactivity_marker"):
+        entry += " ⏸️"
     return entry
 
 
@@ -414,9 +416,12 @@ def save_markdown(
     min_stars: int,
     topics: list[str],
     search_terms: list[str],
+    inactivity_legend: str | None = None,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
+    if any(repo.get("inactivity_marker") for repo in rows) and not inactivity_legend:
+        raise ValueError("Cannot write inactivity markers without their dated legend.")
     lines = [format_compact_entry(repo, rank=index) for index, repo in enumerate(rows, 1)]
     with path.open("w", encoding="utf-8") as handle:
         handle.write(f"# Popular LLM Applications (GitHub Stars >= {min_stars})\n\n")
@@ -424,7 +429,14 @@ def save_markdown(
         handle.write("*Source: GitHub Search API - deduplicated and relevance-filtered across topic and phrase queries*<br>\n")
         handle.write(f"*Topics searched: {', '.join(topics)}*<br>\n")
         handle.write(f"*Phrases searched in repository name, description, and README: {', '.join(search_terms)}*<br>\n")
-        handle.write(f"*Total repositories: {len(rows)}*\n\n")
+        handle.write(f"*Total repositories: {len(rows)}*")
+        if inactivity_legend:
+            handle.write(f"<br>\n{inactivity_legend}<br>\n")
+            handle.write(
+                "*Markers are retained from the dated check; unmarked repositories, "
+                "including newer entries, may not have been checked.*"
+            )
+        handle.write("\n\n")
 
         if rows:
             handle.write("\n".join(lines) + "\n")
@@ -444,7 +456,7 @@ def parse_markdown_entries(path: Path) -> list[dict[str, Any]]:
         r'^\d+\.\s+\[([^\]]+?)(?:\u2728)?\]\(([^)]+)\)'
         r'(?::\s*(.*?))?'
         r'\s*(?:\[(\w+ \d{4})\])?'
-        r'\s*\(⭐\s*([\d,]+)\)',
+        r'\s*\(⭐\s*([\d,]+)\)(?:[ \t]+(⏸️))?',
         re.MULTILINE,
     )
 
@@ -477,11 +489,35 @@ def parse_markdown_entries(path: Path) -> list[dict[str, Any]]:
             "created_at": created_at,
             "updated_at": "",
             "archived": False,
+            "inactivity_marker": bool(m.group(6)),
             "owner": parts[0] if len(parts) == 2 else "",
             "owner_type": "",
         })
 
     return repos
+
+
+def parse_inactivity_legend(path: Path) -> str | None:
+    """Preserve the check date and cutoff associated with existing markers."""
+    if not path.exists():
+        return None
+    match = re.search(
+        r"^\*⏸️ = archived or no commits to the default branch since [^\n*]+\*(?:<br>)?[ \t]*$",
+        path.read_text(encoding="utf-8"),
+        re.MULTILINE,
+    )
+    return match.group(0).strip().removesuffix("<br>") if match else None
+
+
+def preserve_inactivity_markers(repos: list[dict[str, Any]], existing: list[dict[str, Any]]) -> None:
+    marked = {
+        repo.get("full_name", "").casefold()
+        for repo in existing
+        if repo.get("full_name") and repo.get("inactivity_marker")
+    }
+    for repo in repos:
+        if repo.get("full_name", "").casefold() in marked:
+            repo["inactivity_marker"] = True
 
 
 def parse_markdown_topics(path: Path) -> list[str]:
@@ -618,10 +654,13 @@ def main() -> None:
     repo_indices: dict[str, int] = {}
     recorded_topics: list[str] = []
     recorded_search_terms: list[str] = []
+    existing = parse_markdown_entries(output_path) if output_path.exists() else []
+    inactivity_legend = parse_inactivity_legend(output_path)
+    if any(repo.get("inactivity_marker") for repo in existing) and not inactivity_legend:
+        raise ValueError(f"Existing inactivity markers in {output_path} have no dated legend.")
 
     if args.append and output_path.exists():
         print(f"[append] Parsing existing entries from {output_path}")
-        existing = parse_markdown_entries(output_path)
         recorded_topics = parse_markdown_topics(output_path)
         recorded_search_terms = parse_markdown_search_terms(output_path)
         print(f"[append] Loaded {len(existing)} existing repositories")
@@ -679,6 +718,7 @@ def main() -> None:
     if rejected_repos:
         print(f"[filter] excluded {len(rejected_repos)} repositories without clear AI/LLM relevance")
 
+    preserve_inactivity_markers(repos, existing)
     repos.sort(key=lambda repo: (repo.get("stars", 0), repo.get("full_name", "")), reverse=True)
 
     print(f"\n[result] {len(repos)} repositories after dedupe and filtering")
@@ -692,6 +732,7 @@ def main() -> None:
         min_stars=args.min_stars,
         topics=topics,
         search_terms=search_terms,
+        inactivity_legend=inactivity_legend,
     )
 
 
