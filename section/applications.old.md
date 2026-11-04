@@ -1,6 +1,6 @@
 # Archived AI Applications
 
-Checked: **2026-10-02**. Inactivity cutoff: **2025-10-02 00:00:00 UTC**.
+Checked: **2026-11-04**. Inactivity cutoff: **2025-11-04 00:00:00 UTC**.
 
 Archived means GitHub marks the repository as archived.
 
@@ -18,6 +18,7 @@ Source section: [RAG Application](applications.md#rag-application).
 - [Cognita](https://github.com/truefoundry/cognita): RAG (Retrieval Augmented Generation) Framework for building modular, open-source applications [Jul 2023] ![**github stars**](https://img.shields.io/github/stars/truefoundry/cognita?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Dialoqbase](https://github.com/n4ze3m/dialoqbase): Create custom chatbots with your own knowledge base using PostgreSQL. [Jun 2023]
 - [KnowledgeGPT](https://github.com/mmz-001/knowledge_gpt): Upload your documents and get answers to your questions, with citations. [Jan 2023]
+- [RAGFoundry](https://github.com/IntelLabs/RAGFoundry): A library designed to improve LLMs ability to use external information by fine-tuning models on specially created RAG-augmented datasets. [5 Aug 2024] ![**github stars**](https://img.shields.io/github/stars/IntelLabs/RAGFoundry?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Verba](https://github.com/weaviate/Verba): Retrieval Augmented Generation (RAG) chatbot powered by Weaviate [Jul 2023] ![**github stars**](https://img.shields.io/github/stars/weaviate/Verba?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
 ### Additional Agent Framework
@@ -56,20 +57,24 @@ Source section: [SDKs, Integration & ML Libraries](applications.md#sdks-integrat
 Source section: [Training & Fine-tuning](applications.md#training--fine-tuning).
 
 - [fairseq](https://github.com/facebookresearch/fairseq): a sequence modeling toolkit that allows researchers and developers to train custom models for translation, summarization, language modeling [Sep 2017].
+- [mosaicml/llm-foundry](https://github.com/mosaicml/llm-foundry): LLM training code for MosaicML foundation models [Jun 2022]
 
 ### UI & No-Code Tool
 
 Source section: [UI & No-Code Tool](applications.md#ui--no-code-tool).
 
 - [1code](https://github.com/21st-dev/1code): Best UI for Claude Code [Jan 2026] ![**github stars**](https://img.shields.io/github/stars/21st-dev/1code?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [Agent Chat UI](https://github.com/langchain-ai/agent-chat-ui): LangChain Next.js chat UI for interacting with LangGraph agents and deployed LangGraph servers. [2025] ![**github stars**](https://img.shields.io/github/stars/langchain-ai/agent-chat-ui?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [chainlit](https://github.com/Chainlit/chainlit):💡Build production-ready Conversational AI applications in minutes. [Mar 2023]
 - [daggr](https://github.com/gradio-app/daggr): Gradio-based AI workflow builder with interactive node visualizations. [Jan 2026] ![**github stars**](https://img.shields.io/github/stars/gradio-app/daggr?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Flowise](https://github.com/FlowiseAI/Flowise):💡Drag & drop UI to build your customized LLM flow [Apr 2023] ![**github stars**](https://img.shields.io/github/stars/FlowiseAI/Flowise?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [knowledge](https://github.com/KnowledgeCanvas/knowledge): Tool for saving, searching, accessing, and exploring websites and files. Electron based app, built-in Chromium browser, knowledge graph [Jul 2021] ![**github stars**](https://img.shields.io/github/stars/KnowledgeCanvas/knowledge?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
+- [mesop](https://github.com/mesop-dev/mesop): Rapidly build AI apps in Python [Oct 2023] ![**github stars**](https://img.shields.io/github/stars/mesop-dev/mesop?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Open Agent Platform](https://github.com/langchain-ai/open-agent-platform): Langchain. An open-source, no-code agent building platform. [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/langchain-ai/open-agent-platform?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 
-### Computer use
+### Computer & Browser use
 
-Source section: [Computer use](applications.md#computer-use).
+Source section: [Computer & Browser use](applications.md#computer--browser-use).
 
 - [Open Operator](https://github.com/browserbase/open-operator): a web agent based on Browserbase [24 Jan 2025] ![**github stars**](https://img.shields.io/github/stars/browserbase/open-operator?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
@@ -100,6 +105,12 @@ Source section: [Skills](applications.md#skills).
 
 - [NotebookLM Integration Workflow](https://github.com/PleasePrompto/notebooklm-skill): NotebookLM integration skill for research and note synthesis. ![**github stars**](https://img.shields.io/github/stars/PleasePrompto/notebooklm-skill?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
+### Memory
+
+Source section: [Memory](applications.md#memory).
+
+- [Acontext](https://github.com/memodb-io/Acontext): A context data platform for cloud-native AI Agent. [Jul 2025] ![**github stars**](https://img.shields.io/github/stars/memodb-io/Acontext?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+
 ## Inactive
 
 ### RAG Application
@@ -111,6 +122,7 @@ Source section: [RAG Application](applications.md#rag-application).
 - [Gemini-Search](https://github.com/ammaarreshi/Gemini-Search): Perplexity style AI Search engine clone built with Gemini [Jan 2025] ![**github stars**](https://img.shields.io/github/stars/ammaarreshi/Gemini-Search?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [localGPT-Vision](https://github.com/PromtEngineer/localGPT-Vision): an end-to-end vision-based Retrieval-Augmented Generation (RAG) system. [Oct 2024] ![**github stars**](https://img.shields.io/github/stars/PromtEngineer/localGPT-Vision?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [MindSearch](https://github.com/InternLM/MindSearch): An open-source AI Search Engine Framework [Jul 2024] ![**github stars**](https://img.shields.io/github/stars/InternLM/MindSearch?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [MiniRAG](https://github.com/HKUDS/MiniRAG): RAG through heterogeneous graph indexing and lightweight topology-enhanced retrieval. [Jan 2025] ![**github stars**](https://img.shields.io/github/stars/HKUDS/MiniRAG?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [quivr](https://github.com/QuivrHQ/quivr): A personal productivity assistant (RAG). Chat with your docs (PDF, CSV, ...) [May 2023] ![**github stars**](https://img.shields.io/github/stars/QuivrHQ/quivr?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [RAG Builder](https://github.com/KruxAI/ragbuilder): Automatically create an optimal production-ready Retrieval-Augmented Generation (RAG) setup for your data. [Jun 2024] ![**github stars**](https://img.shields.io/github/stars/KruxAI/ragbuilder?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [RAG capabilities of LlamaIndex to QA about SEC 10-K & 10-Q documents](https://github.com/run-llama/sec-insights): A real world full-stack application using LlamaIndex [Sep 2023] ![**github stars**](https://img.shields.io/github/stars/run-llama/sec-insights?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -135,6 +147,7 @@ Source section: [Top Agent Frameworks](applications.md#top-agent-frameworks).
 Source section: [Additional Agent Framework](applications.md#additional-agent-framework).
 
 - [AgentVerse](https://github.com/OpenBMB/AgentVerse): Primarily providing: task-solving and simulation. [May 2023] ![**github stars**](https://img.shields.io/github/stars/OpenBMB/AgentVerse?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
+- [AutoAgent](https://github.com/HKUDS/AutoAgent): AutoAgent: Fully-Automated and Zero-Code LLM Agent Framework ![**github stars**](https://img.shields.io/github/stars/HKUDS/AutoAgent?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Contains Studio AI Agents](https://github.com/contains-studio/agents): A comprehensive collection of specialized AI agents. [Jul 2025] ![**github stars**](https://img.shields.io/github/stars/contains-studio/agents?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [maestro](https://github.com/Doriandarko/maestro): A Framework for Claude Opus, GPT, and local LLMs to Orchestrate Subagents [Mar 2024] ![**github stars**](https://img.shields.io/github/stars/Doriandarko/maestro?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 - [Mixture Of Agents (MoA)](https://github.com/togethercomputer/MoA): an architecture that runs multiple LLMs in parallel, then uses a final "aggregator" model to merge their outputs into a superior combined response. [Jun 2024] ![**github stars**](https://img.shields.io/github/stars/togethercomputer/MoA?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
@@ -156,6 +169,7 @@ Source section: [Data Processing & OCR](applications.md#data-processing--ocr).
 - [MegaParse](https://github.com/quivrhq/megaparse): a powerful and versatile parser that can handle various types of documents. Focus on having no information loss during parsing. [30 May 2024] ![**github stars**](https://img.shields.io/github/stars/quivrhq/megaparse?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 - [Nougat](https://github.com/facebookresearch/nougat): Neural Optical Understanding for Academic Documents: The academic document PDF parser that understands LaTeX math and tables. [25 Aug 2023].
 - [Ollama OCR](https://github.com/imanoop7/Ollama-OCR): A powerful OCR (Optical Character Recognition) package that uses state-of-the-art vision language models. [Nov 2024] ![**github stars**](https://img.shields.io/github/stars/imanoop7/Ollama-OCR?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
+- [pandas-ai](https://github.com/Sinaptik-AI/pandas-ai): Chat with your database (SQL, CSV, pandas, polars, mongodb, noSQL, etc). [Apr 2023] ![**github stars**](https://img.shields.io/github/stars/Sinaptik-AI/pandas-ai?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [PDF2Audio](https://github.com/lamm-mit/PDF2Audio): an open-source alternative to NotebookLM for podcast creation [Sep 2024].
 - [pipet](https://github.com/bjesus/pipet): Swiss-army tool for scraping and extracting data from online [Sep 2024] ![**github stars**](https://img.shields.io/github/stars/bjesus/pipet?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 - [PostgresML](https://github.com/postgresml/postgresml): The GPU-powered AI application database. [Apr 2022] ![**github stars**](https://img.shields.io/github/stars/postgresml/postgresml?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -209,6 +223,7 @@ Source section: [SDKs, Integration & ML Libraries](applications.md#sdks-integrat
 
 Source section: [Training & Fine-tuning](applications.md#training--fine-tuning).
 
+- [Memento](https://github.com/Agent-on-the-Fly/Memento): Fine-tuning LLM Agents without Fine-tuning LLMs [Jun 2025] ![**github stars**](https://img.shields.io/github/stars/Agent-on-the-Fly/Memento?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Meta Lingua](https://github.com/facebookresearch/lingua): a minimal and fast LLM training and inference library designed for research. [Oct 2024] ![**github stars**](https://img.shields.io/github/stars/facebookresearch/lingua?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Reranker](https://github.com/luyug/Reranker): Training and deploying deep languge model reranker in information retrieval (IR), question answering (QA) [Jan 2021] ![**github stars**](https://img.shields.io/github/stars/luyug/Reranker?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 
@@ -227,9 +242,9 @@ Source section: [A2A](applications.md#a2a).
 - [Python A2A](https://github.com/themanojdesai/python-a2a): Python Implementation of Google's Agent-to-Agent (A2A) Protocol with Model Context Protocol (MCP) Integration [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/themanojdesai/python-a2a?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [SharpA2A](https://github.com/darrelmiller/sharpa2a): A .NET implementation of the Google A2A protocol. [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/darrelmiller/sharpa2a?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
-### Computer use
+### Computer & Browser use
 
-Source section: [Computer use](applications.md#computer-use).
+Source section: [Computer & Browser use](applications.md#computer--browser-use).
 
 - [ACU - Awesome Agents for Computer Use](https://github.com/francedot/acu) ![**github stars**](https://img.shields.io/github/stars/francedot/acu?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Agent.exe](https://github.com/corbt/agent.exe): Electron app to use computer use APIs. [Oct 2024] ![**github stars**](https://img.shields.io/github/stars/corbt/agent.exe?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -268,6 +283,7 @@ Source section: [Coding](applications.md#coding).
 Source section: [Deep Research](applications.md#deep-research).
 
 - [Agent Laboratory](https://github.com/SamuelSchmidgall/AgentLaboratory): E2E autonomous research workflow. Using LLM Agents as Research Assistants. [8 Jan 2025] ![**github stars**](https://img.shields.io/github/stars/SamuelSchmidgall/AgentLaboratory?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [ASearcher](https://github.com/inclusionAI/ASearcher): ASearcher: An Open-Source Large-Scale Reinforcement Learning Project for Search Agents [11 Aug 2025] ![**github stars**](https://img.shields.io/github/stars/inclusionAI/ASearcher?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [GPT Newspaper](https://github.com/assafelovic/gpt-newspaper): Autonomous agent designed to create personalized newspapers [Jan 2024]
 - [gpt-code-ui](https://github.com/ricklamers/gpt-code-ui) An open source implementation of OpenAI's ChatGPT Code interpreter. [May 2023] ![**github stars**](https://img.shields.io/github/stars/ricklamers/gpt-code-ui?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [MLAB ResearchAgent](https://github.com/snap-stanford/MLAgentBench): Evaluating Language Agents on Machine Learning Experimentation [Aug 2023] ![**github stars**](https://img.shields.io/github/stars/snap-stanford/MLAgentBench?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -294,3 +310,9 @@ Source section: [Agentic Engineering](applications.md#agentic-engineering).
 
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents): Production principles for reliable LLM applications, including context ownership, execution state, control flow, error compaction, and small focused agents. [2025] ![**github stars**](https://img.shields.io/github/stars/humanlayer/12-factor-agents?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Agents as Loops](https://github.com/humanlayer/12-factor-agents#agents-as-loops): Explains the core cycle of selecting an action, executing it, appending the result to context, and repeating until completion. [2025]
+
+### GraphRAG
+
+Source section: [GraphRAG](applications.md#graphrag).
+
+- [Fast GraphRAG](https://github.com/circlemind-ai/fast-graphrag): 6x cost savings compared to `graphrag`, with 20% higher accuracy. Combines PageRank and GraphRAG. [Oct 2024] ![**github stars**](https://img.shields.io/github/stars/circlemind-ai/fast-graphrag?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)

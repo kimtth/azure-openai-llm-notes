@@ -168,6 +168,7 @@ databricks-dolly-15k: Instruction-Tuned [🤗](https://huggingface.co/datasets/d
 - [MMLU (Massive Multitask Language Understanding)](https://github.com/hendrycks/test):🏆Over 15,000 questions across 57 diverse tasks. [Published in 2021]
 ![**github stars**](https://img.shields.io/github/stars/hendrycks/test?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [MMLU (Massive Multi-task Language Understanding)📑](https://arxiv.org/abs/2009.03300): LLM performance across 57 tasks including elementary mathematics, US history, computer science, law, and more. [7 Sep 2020]
+- [Potemkin Benchmark](https://github.com/MarinaMancoridis/PotemkinBenchmark): Datasets supporting tests of apparent versus coherent conceptual understanding. [May 2025] ![**github stars**](https://img.shields.io/github/stars/MarinaMancoridis/PotemkinBenchmark?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [TruthfulQA🤗](https://huggingface.co/datasets/truthful_qa): Truthfulness. [Published in 2022]
 
 #### Coding

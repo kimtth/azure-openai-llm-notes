@@ -245,6 +245,7 @@
 - [Engram (Conditional Memory Module)](https://github.com/deepseek-ai/Engram)
   Adds a native memory lookup alongside neural computation, letting frequent patterns be retrieved in constant time. `output = compute(x) + memory lookup(x)`   
   (vs. attention: recomputing patterns every time -> Engram)
+- [DeepSeek-V4.1-Flash-1017🤗](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017): Updated MIT-licensed multimodal weights with 1M-token context; vendor-reported gains over the prior Flash (Terminal-Bench 4.0: 42.3 vs 31.2) depend on the stated harnesses. [Oct 2026]
 - A list of models: / [git](https://github.com/deepseek-ai)
 
 #### **EleutherAI**
@@ -318,6 +319,7 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [Muse Glimmer](https://developer.meta.com/ai/models/muse-glimmer/): Apache-2.0, 30B open model for always-on local agents; supports reliable tool calling, persistent state, self-managed memory, and multimodal perception on a single GPU or Mac. [Aug 2026]
 - [Muse Spark](https://ai.meta.com/blog/introducing-muse-spark-msl): Meta's multimodal reasoning model with tool use, visual chain-of-thought, and multi-agent Contemplating mode. [Apr 2026]
 - [Muse Spark 1.2](https://developer.meta.com/ai/models/muse-spark/): 1M-context model optimized for coding workflows, reliable tool calling, and long-running tasks. [Aug 2026]
+- [Muse Wonder](https://about.fb.com/news/2026/10/introducing-muse-wonder-models/): Meta agent models pairing Active Memory (context across conversations) with Active Focus (persisting through tasks); available via Meta Model API and Muse Code, with no open weights announced. [Oct 2026]
 
 #### **Microsoft**
 
@@ -334,6 +336,8 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [Phi-4-multimodal / mini🤗](https://huggingface.co/microsoft/Phi-4-multimodal-instruct/blob/main/phi_4_mm.tech_report.02252025.pdf) 5.6B. speech, vision, and text processing into a single, unified architecture. [26 Feb 2025]
 - [Phi-4-reasoning](https://azure.microsoft.com/en-us/blog/one-year-of-phi-small-language-models-making-big-leaps-in-ai/): Phi-4-reasoning, Phi-4-reasoning-plus, Phi-4-mini-reasoning [30 Apr 2025]
 - [Phi-4-mini-flash-reasoning](https://azure.microsoft.com/en-us/blog/reasoning-reimagined-introducing-phi-4-mini-flash-reasoning/): 3.8B, 64K context, Single GPU, Decoder-Hybrid-Decoder architecture  [9 Jul 2025]
+- [Microsoft-Decision-1](https://labs.ai.azure.com/innovations/microsoft-decision-1/): Qwen3.5-9B-based model returning structured, confidence-bearing decisions for classification, routing, and grading; text/JSON only and a different API from OpenAI's Decisions, so not a drop-in substitute. [Oct 2026]
+- [MAI-Base-2](https://microsoft.ai/news/frontier-pre-training-at-microsoft-ai/): Sparse foundation model with 2.8T total and 80B active parameters per token, still in post-training at announcement; no chat API or weights announced, and efficiency claims are scaling-law estimates, not inference speed. [Oct 2026]
 
 #### **MiniMaxAI**
 
@@ -349,6 +353,7 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [NeMo](https://mistral.ai/news/mistral-nemo/): 12B model with 128k context length that outperforms LLama 3 8B [18 Jul 2024]
 - [Mistral OCR](https://mistral.ai/news/mistral-ocr): Precise text recognition with up to 99% accuracy. Multimodal. Browser based [6 Mar 2025]
 - [Mistral Large 3](https://mistral.ai/news/mistral-3): Flagship multimodal model for reasoning, coding, and enterprise assistants. [Mar 2025]
+- [Mistral Large 4](https://mistral.ai/news/mistral-large-4-oss/): Open-weight multimodal model supporting agentic coding, cybersecurity, and configurable reasoning efficiency. [Oct 2026]
 
 #### **Moonshot AI**
 
@@ -358,6 +363,7 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 - [Kimi-K2.5](https://github.com/MoonshotAI/Kimi-K2.5): Open-source multimodal agentic model by Moonshot AI. [Jan 2026] ![**github stars**](https://img.shields.io/github/stars/MoonshotAI/Kimi-K2.5?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Kimi K2.6](https://www.kimi.com/blog/kimi-k2-6): Open-source coding model with long-horizon execution, coding-driven design, agent swarms, and proactive agent workflows. [Apr 2026]
 - [Kimi K3](https://www.kimi.com/blog/kimi-k3): Open 2.8T-parameter multimodal model with a 1M-token context window, built for long-horizon coding, knowledge work, and reasoning. [16 Jul 2026]
+- [Kimi K3.1 Pro](https://www.kimi.ai/blog/kimi-k3-1-pro): Post-trained 3T-class model for long-horizon coding, 3D creation, and financial research; weights promised by 4 Nov but unverified, and Terminal-Bench 65.7% is vendor-reported. [Oct 2026]
 
 #### **Motif Technologies**
 
@@ -380,6 +386,8 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 #### **OpenAI**
 
 - [gpt-oss](https://github.com/openai/gpt-oss):💡**gpt-oss-120b** and **gpt-oss-20b** are two open-weight language models by OpenAI. [Jun 2025] ![**github stars**](https://img.shields.io/github/stars/openai/gpt-oss?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [GPT-6.1 Sol](https://openai.com/index/introducing-gpt-6-1-sol/): Balances coding, computer use, and professional work at lower frontier cost; 1.05M-token context, $2/$10 per million input/output tokens. [Sep 2026]
+- [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra): Efficient visual reasoning and precise computer use at half Sol's price ($1/$5 per million input/output tokens); a separate model with the same limits. [Oct 2026]
 
 #### **Qualcomm**
 
@@ -725,6 +733,7 @@ systematic, step-by-step comparative evaluation. [19 Mar 2024]
 #### **Architecture Variants, Attention, and Sparse Computation**
 
 - [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding📑](https://arxiv.org/abs/1810.04805):🏆Encoder-only Transformer that learns bidirectional representations through masked-language modeling, establishing a widely adopted pre-training and fine-tuning pattern for language understanding. [11 Oct 2018]
+- [Next-Concept Modeling: Fast, Parallel Coarse-to-Fine Text Generation📑](https://arxiv.org/abs/2610.14162): Generates hierarchical discrete text codes in parallel for efficient coarse-to-fine generation. [Oct 2026] / [git](https://github.com/HazyResearch/ncm) ![**github stars**](https://img.shields.io/github/stars/HazyResearch/ncm?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [T5: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer📑](https://arxiv.org/abs/1910.10683):🏆Frames every NLP task as text-to-text generation, systematically studies transfer learning choices, and introduces the C4 pretraining corpus. [23 Oct 2019]
 - [Simplifying Transformer Blocks📑](https://arxiv.org/abs/2311.01906): Simplifie Transformer. Removed several block components, including skip connections, projection/value matrices, sequential sub-blocks and normalisation layers without loss of training speed. [3 Nov 2023]
 - [Differential Transformer📑](https://arxiv.org/abs/2410.05258): Amplifies attention to the relevant context while minimizing noise using two separate softmax attention mechanisms. [7 Oct 2024]
@@ -814,8 +823,12 @@ generated webpages are considered better than the original reference webpages` [
 - Math soving optimized LLM [WizardMath📑](https://arxiv.org/abs/2308.09583): Developed by adapting Evol-Instruct and Reinforcement Learning techniques, these models excel in math-related instructions like GSM8k and MATH. / [git](https://github.com/nlpxucan/WizardLM) [18 Aug 2023] / Math solving Plugin: [Wolfram alpha](https://www.wolfram.com/wolfram-plugin-chatgpt/)
  ![**github stars**](https://img.shields.io/github/stars/nlpxucan/WizardLM?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Multitask Prompted Training Enables Zero-Shot Task Generalization📑](https://arxiv.org/abs/2110.08207): A language model trained on various tasks using prompts can learn and generalize to new tasks in a zero-shot manner. [15 Oct 2021]
+- [Neural Networks Are Already Clean](https://already-clean.goodfire.com/): Argues that neurons seemingly mixing unrelated concepts (like cat faces and car fronts) were misread, so networks can be studied directly.
 - [On the Slow Death of Scaling📑](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5877662): 💡Relying solely on scaling model size and data is becoming less effective, and AI progress now depends on exploring more nuanced, efficient approaches. [12 Dec 2025]
+- [Potemkin Understanding in Large Language Models📑](https://arxiv.org/abs/2506.21521): Examines benchmark success that masks incoherent concept representations rather than genuine understanding. [Jun 2025]
+- Recursive Self-Improvement: [The Last AI Built by Humans📑](https://arxiv.org/abs/2609.11873): Roadmap for AI that persistently rewrites its own code or strategies, not just single answers; [AIDE²📑](https://arxiv.org/abs/2609.26457) shows seven self-made agent-code improvements in eight days, but not unrestricted intelligence growth. [Sep 2026]
 - [Testing theory of mind in large language models and humans](https://www.nature.com/articles/s41562-024-01882-z): Some large language models (LLMs) perform as well as, and in some cases better than, humans when presented with tasks designed to test the ability to track people’s mental states, known as “theory of mind.” [AI models can outperform humans in tests to identify mental states](https://www.technologyreview.com/2024/05/20/1092681/ai-models-can-outperform-humans-in-tests-to-identify-mental-states) [20 May 2024]
+- [Why is AI-generated language so hard to understand?📑](https://arxiv.org/abs/2610.29162): Links difficult generated prose to psycholinguistic features and optimization for information density. [Oct 2026]
 
 #### **Reasoning**
 
@@ -1068,6 +1081,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 - [Political biases of LLMs📑](https://arxiv.org/abs/2305.08283): From Pretraining Data to Language Models to Downstream Tasks: Tracking the Trails of Political Biases Leading to Unfair NLP Models. [15 May 2023] <br/>
   <img src="../files/political-llm.png" width="450">
 - [On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?📑](https://dl.acm.org/doi/10.1145/3442188.3445922):🏆Examines environmental, data-provenance, representational-harm, and deployment risks of large language models. [Mar 2021]
+- [Stealing Reasoning Traces from Proprietary LLM APIs📑](https://arxiv.org/abs/2608.09867): Studies encrypted-reasoning vulnerabilities and proposes cryptographic and system-level mitigations. [Aug 2026]
 - [The Instruction Hierarchy📑](https://arxiv.org/abs/2404.13208): Training LLMs to Prioritize Privileged Instructions. The OpenAI highlights the need for instruction privileges in LLMs to prevent attacks and proposes training models to conditionally follow lower-level instructions based on their alignment with higher-level instructions. [19 Apr 2024]
 - [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model):💡`Claude 3.5 Haiku` 1. `Universal Thought Processing (Multiple Languages)`: Shared concepts exist across languages and are then translated into the respective language.  2. `Advance Planning (Composing Poetry)`: Despite generating text word by word, it anticipates rhyming words in advance.  3. `Fabricated Reasoning (Math)`: Produces plausible-sounding arguments even when given an incorrect hint. [27 Mar 2025] 
 - [Trustworthy LLMs📑](https://arxiv.org/abs/2308.05374): Comprehensive overview for assessing LLM trustworthiness; Reliability, safety, fairness, resistance to misuse, explainability and reasoning, adherence to social norms, and robustness. [10 Aug 2023]
@@ -1076,6 +1090,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 
 ### **Business Adoption and Use Cases**
 
+- [AI in Science: Early Insights📑](https://arxiv.org/abs/2609.28504): Studies scientific AI adoption using interaction data, specialized models, and scientist surveys. [Sep 2026]
 - [AI-powered success—with more than 1,000 stories of customer transformation and innovation](https://www.microsoft.com/en-us/microsoft-cloud/blog/2025/07/24/ai-powered-success-with-1000-stories-of-customer-transformation-and-innovation/)💡[24 July 2025]
 - [Anthropic Clio](https://www.anthropic.com/research/clio): Privacy-preserving insights into real-world AI use [12 Dec 2024]
 - [Anthropic Economic Index](https://www.anthropic.com/news/the-anthropic-economic-index): a research on the labor market impact of technologies. The usage is concentrated in software development and technical writing tasks. [10 Feb 2025]
@@ -1084,6 +1099,7 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
 - [Chatbot Interviewers Fill More Jobs](https://www.deeplearning.ai/the-batch/study-shows-ai-agent-interviewers-improve-hiring-retention-in-customer-service-jobs/): Using chatbots as interviewers improves hiring efficiency and retention in customer service roles. [3 Sep 2025]
 - [Examining the Use and Impact of an AI Code Assistant on Developer Productivity and Experience in the Enterprise📑](https://arxiv.org/abs/2412.06603): IBM study surveying developer experiences with watsonx Code Assistant (WCA). Most common use: code explanations (71.9%). Rated effective by 57.4%, ineffective by 42.6%. Many described WCA as similar to an “intern” or “junior developer.” [9 Dec 2024]
 - [Future of Work with AI Agents: Auditing Automation and Augmentation Potential across the U.S. Workforce📑](https://arxiv.org/abs/2506.06576): A new framework maps U.S. workers’ preferences for AI automation vs. augmentation across 844 tasks.　It shows how people want AI to help or replace them. Many jobs need AI to support people, not just take over. [6 Jun 2025]
+- [Genisis IQ use cases](https://usecase.genisisiq.com/): Catalogs customer deployments with architecture, outcomes, and source-backed evidence for comparison.
 - [Google: 321 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/) [19 Dec 2024]
 - [Google: 60 of our biggest AI announcements in 2024](https://blog.google/technology/ai/google-ai-news-recap-2024/) [23 Dec 2024]
 - [How people are using ChatGPT](https://openai.com/index/how-people-are-using-chatgpt/): OpenAI. Broadly adopted worldwide, mainly for advice (49%), task completion (40%), and creative expression (11%), with significant work-related use and rapid uptake in lower-income regions. [15 Sep 2025]
@@ -1101,6 +1117,14 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
   > - [The 2024 AI Index Report](https://hai.stanford.edu/ai-index/2024-ai-index-report) [15 Apr 2024]
   > - [The 2025 AI Index Report](https://hai.stanford.edu/ai-index/2025-ai-index-report) [7 Apr 2025]
   > - [The 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report) [13 Apr 2026]
+- [The Agentic Operating Model](https://242623570.fs1.hubspotusercontent-na2.net/hubfs/242623570/Guides%2c%20ebook%2c%20PDF/The%20Agentic%20Operating%20Model.pdf): Aligns platform teams, domain builders, and continuous evaluation to operate production agents at scale.
+  - **People:** Three rings: platform engineers (shared infrastructure), agent engineers (domain agents), and non-technical builders. Avoids both a central bottleneck and ungoverned sprawl.
+  - **Process:** Build → Test → Deploy → Monitor, with Iterate and Govern continuous. Evaluation uses curated, synthetic, regression, and adversarial datasets; production traces feed back into improvements.
+  - **Controls:** Risk-tiered approvals, sandboxing, gradual rollout, and FinOps are built in from the start. Examples use LangChain products; the principles are portable.
+- [The Agentic Organization: Contours of the Next Paradigm for the AI Era](https://www.mckinsey.com/~/media/mckinsey/business%20functions/people%20and%20organizational%20performance/our%20insights/the%20agentic%20organization%20contours%20of%20the%20next%20paradigm%20for%20the%20ai%20era/the-agentic-organization-contours-of-the-next-paradigm-for-the-ai-era.pdf?shouldIndex=false): Proposes human-agent organizations spanning business models, workflows, governance, workforce, and enabling technology and data. [Sep 2025]
+  - **Five dimensions:** Business model, operating model, governance, workforce and culture, technology and data. Core idea: AI-first workflows run by human-agent teams, with governance embedded and humans accountable.
+  - **Implication:** Redesign work, decision rights, skills, and incentives together instead of bolting agents onto unchanged processes.
+  - **Real difference from LangChain:** McKinsey covers enterprise-wide organizational design; LangChain covers how to build, evaluate, and run agents. Complementary, not competing.
 - [The leading generative AI companies](https://iot-analytics.com/leading-generative-ai-companies/):💡GPU: Nvidia 92% market share, Generative AI foundational models and platforms: Microsoft 32% market share, Generative AI services: no single dominant [4 Mar 2025]
 - [Trends – Artiﬁcial Intelligence](https://www.bondcap.com/report/pdf/Trends_Artificial_Intelligence.pdf):💡Issued by Bondcap VC. 340 Slides. ChatGPT’s 800 Million Users, 99% Cost Drop within 17 months. [May 2025]
 - [Who is using AI to code? Global diffusion and impact of generative AI📑](https://arxiv.org/abs/2506.08945): AI wrote 30% of Python functions by U.S. devs in 2024. Adoption is uneven globally but boosts output and innovation. New coders use AI more, and usage drives $9.6–$14.4B in U.S. annual value. [10 Jun 2025]
@@ -1190,9 +1214,11 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [New embedding models](https://openai.com/blog/new-embedding-models-and-api-updates) `text-embedding-3-small`: Embedding size: 512, 1536 `text-embedding-3-large`: Embedding size: 256,1024,3072 [25 Jan 2024]
 - [Navier–Stokes Solution](https://openai.com/index/navier-stokes-solution) - OpenAI research report on an AI-assisted solution to a Navier–Stokes problem. [Sep 2026]
 - Open AI Enterprise: Removes GPT-4 usage caps, and performs up to two times faster [Introducing chatgpt enterprise](https://openai.com/blog/introducing-chatgpt-enterprise) [28 Aug 2023]
+- [OpenAI Decisions API](https://developers.openai.com/api/docs/guides/decisions): Returns typed probabilities, choices, and rubric scores (up to 400 questions per input) instead of free-form text; $0.10 per million uncached input tokens, no output charges. [Oct 2026]
 - [OpenAI DevDay 2023](https://openai.com/blog/new-models-and-developer-products-announced-at-devday): GPT-4 Turbo with 128K context, Assistants API (Code interpreter, Retrieval, and function calling), GPTs (Custom versions of ChatGPT: [Introducing gpts](https://openai.com/blog/introducing-gpts)), Copyright Shield, Parallel Function Calling, JSON Mode, Reproducible outputs [6 Nov 2023]
 - [OpenAI DevDay 2024](https://openai.com/devday/): Real-time API (speech-to-speech), Vision Fine-Tuning, Prompt Caching, and Distillation (fine-tuning a small language model using a large language model). [Community.openai.com](https://community.openai.com/t/devday-2024-san-francisco-live-ish-news/963456) [1 Oct 2024]
 - [OpenAI DevDay 2025](https://openai.com/devday): ChatGPT Apps + SDK, AgentKit, GPT-5 Pro, Sora 2 video API, upgraded Codex [Announcing devday 2025](https://openai.com/index/announcing-devday-2025/) [6 Oct 2025]
+- [OpenAI dots](https://openai.com/index/introducing-dots/): Always-on cloud agents with their own computer and app connections that handle ongoing tasks under permission controls; eligible Pro, Business Premium, and Enterprise users first. [Sep 2026]
 - [OpenAI Frontier](https://openai.com/index/introducing-openai-frontier/): OpenAI’s largest, most capable model tier. [Feb 2026]
 - [Operator](https://openai.com/index/introducing-operator/): GUI Agent. Operates embedded virtual environments. Specialized model (Computer-Using Agent). [23 Jan 2025]
 - [Prism](https://openai.com/index/introducing-prism/): AI-native workspace for scientists to write and collaborate on research. [27 Jan 2026]
@@ -1205,6 +1231,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills): A way to package instructions, scripts, and resources into “skills” that Claude agents can dynamically load. [16 Oct 2025]
 - [Anthropic CLI (Claude Code)](https://www.npmjs.com/package/@anthropic-ai/claude-code): The official command-line interface that lives in your project directory, enabling natural-language code generation, refactoring, and Git automation. [24 Feb 2025]
 - [Bringing Code Review to Claude Code](https://claude.com/blog/code-review): Multi-agent PR review dispatches parallel agents and verifies bugs before posting findings. [9 Mar 2026]
+- [Claude Haiku 5.5](https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws/): Introduces efficient, low-latency capabilities for subagents and high-volume tasks, with configurable effort. [Oct 2026]
 - [Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use): Dispatch carries tasks across phone and desktop while Claude operates your computer. [23 Mar 2026]
 - [Anthropic killed Tool calling📺](https://www.youtube.com/watch?v=3wglqgskzjQ): Programmatic Tool Calling / Dynamic Filtering — what changed in Anthropic’s API. [Feb 2026]
 - [Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk): A toolkit for building multi-step, tool-using agents using the Claude API. [29 Sep 2025]
@@ -1230,6 +1257,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [AlphaMissense](https://deepmind.google/science/): A machine learning tool that classifies the effects of 71 million 'missense' mutations in the human genome to help pinpoint disease causes. [2025]
 - [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/): An autonomous AI agent leveraging Gemini Deep Think models to automatically find, debug, and fix complex software security vulnerabilities. [Oct 2025]
 - [Firebase Studio](https://firebase.google.com/docs/ai-assistance/gemini-in-firebase): A web-based IDE that uses Gemini to assist in building, refactoring, and troubleshooting full-stack web and mobile applications. [7 May 2025]
+- [Gemini 4 Argon](https://deepmind.google/models/model-cards/gemini-4-argon/): Multimodal reasoning model for long-context coding, science, and tool-using agents; its 1,048,576-token window is shared by input, thinking, and output; $2/$10 per million tokens through 30 Nov, then $4/$20. [Oct 2026]
 - [Gemini CLI](https://github.com/google/gemini-cli): An open-source terminal interface for "vibecoding" that brings Gemini 3 Pro capabilities directly to the command line for script generation and automation. [25 Jun 2025]
 - [Gemini 3.8 Flash](https://deepmind.google/models/gemini/flash/) - Fast multimodal model for agentic coding, reasoning, and knowledge work. [Sep 2026]
 - [Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist): An enterprise-grade AI assistant for IDEs (VS Code, IntelliJ) that offers context-aware code completion, generation, and chat using Gemini models. [20 May 2025]
@@ -1434,6 +1462,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 
 - [13+ Attention Mechanisms You Should Know](https://www.turingpost.com/p/attention-types): [19 Apr 2026]  
   <img src="../files/visual-attention.png" width="650" alt="visual attention" />  
+- [Agentic Large Language Models📑](https://arxiv.org/abs/2610.13455): Textbook explaining agent operation, interaction, and implications for users. [Oct 2026]
 - [AI by Hand | Special Lecture - DeepSeek](https://www.youtube.com/watch?v=idF6TiTGYsE):🏆MoE, Latent Attention implemented in DeepSeek / [git](https://github.com/ImagineAILab/ai-by-hand-excel) [30 Jan 2025]
 - [AI-Crash-Course](https://github.com/henrythe9th/AI-Crash-Course): AI Crash Course to help busy builders catch up to the public frontier of AI research in 2 weeks [Jan 2025]
 - [AI Engineering Book](https://github.com/chiphuyen/aie-book): Resources for AI engineers and supporting materials for Chip Huyen's AI Engineering book. ![**github stars**](https://img.shields.io/github/stars/chiphuyen/aie-book?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
