@@ -200,6 +200,7 @@
 - [Agents](https://huyenchip.com/2025/01/07/agents.html):💡Chip Huyen [7 Jan 2025]
 - [AI agent orchestration patterns](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns):💡Sequential, Concurrent, Group chat, Handoff, Magentic orchestration [17 Jun 2025]
 - [AI Coding Assistants Haven’t Sped up Delivery Because Coding Was Never the Bottleneck](https://www.infoq.com/news/2026/03/agoda-ai-code-bottleneck/): AI shifts bottlenecks upstream to specification, alignment, and verification. [Mar 2026]
+- [AWS Well-Architected Agent](https://aws.amazon.com/blogs/aws/announcing-aws-well-architected-agent-an-ai-powered-intelligence-to-optimize-your-cloud-environment-preview/): Analyzes cloud environments and recommends goal-aligned improvements with implementation guidance. [Oct 2026]
 - [Azure AI Foundry Agent Ochestration Patterns ](https://aifoundry.app/patterns): Prompt Chaining, Routing, Parallelization, Orchestrator, Evaluator-optimizer
 - [Decision Matrix: API vs MCP Tools](https://techcommunity.microsoft.com/blog/azurearchitectureblog/decision-matrix-api-vs-mcp-tools-%E2%80%94-the-great-integration-showdown-%F0%9F%A5%8A/4499385): Tradeoffs between REST APIs, SDKs, and MCP tools. [Jul 2025]
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents): Treat context as a finite attention budget; covers high-signal context, compaction, persistent notes, and subagent isolation for long-horizon work. [29 Sep 2025]

@@ -96,6 +96,7 @@ Refereces: [DailyDoseOfDS - *Evolution of the Agent Landscape*](https://blog.dai
   - [Large Language Model Training and Optimization](section/models_research.md#large-language-model-training-and-optimization)
   - [Pre-training and Data Preparation](section/models_research.md#pre-training-and-data-preparation)
   - [Architecture and Inference Patterns](section/models_research.md#architecture-and-inference-patterns)
+  - [Capabilities and Reasoning](section/models_research.md#capabilities-and-evaluation)
   - [Post-training and Fine-Tuning](section/models_research.md#post-training-and-fine-tuning)
 - **Impact & Products**
   - [AI Adoption, Impact, and Society](section/models_research.md#ai-adoption-impact-and-society)

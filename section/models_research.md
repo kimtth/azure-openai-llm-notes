@@ -56,7 +56,11 @@
     - [Models and Model Families](#models-and-model-families)
     - [Product and Platform Releases](#product-and-platform-releases)
   - [Anthropic AI Products](#anthropic-ai-products)
+    - [Claude Models and Model Families](#claude-models-and-model-families)
+    - [Anthropic Products, Tools, and Reference](#anthropic-products-tools-and-reference)
   - [Google AI Products](#google-ai-products)
+    - [Google Models and Model Families](#google-models-and-model-families)
+    - [Google Products, Tools, and Reference](#google-products-tools-and-reference)
 - [Survey and Reference](#survey-and-reference)
   - [Survey on Large Language Models](#survey-on-large-language-models)
   - [Additional Topics: A Survey of LLMs](#additional-topics-a-survey-of-llms)
@@ -186,14 +190,7 @@
 
 #### **Anthropic**
 
-- [Claude 3](https://www.anthropic.com/news/claude-3-family), the largest version of the new LLM, outperforms rivals GPT-4 and Google’s Gemini 1.0 Ultra. Three variants: Opus, Sonnet, and Haiku. [Mar 2024]
-- [Claude 3.7 Sonnet and Claude Code](https://www.anthropic.com/news/claude-3-7-sonnet): the first hybrid reasoning model. [Claude 3.7 Sonnet System Card](https://assets.anthropic.com/m/785e231869ea8b3b/original/claude-3-7-sonnet-system-card.pdf) [25 Feb 2025]
-- [Claude 4](https://www.anthropic.com/news/claude-4): Claude Opus 4 (72.5% on SWE-bench),  Claude Sonnet 4 (72.7% on SWE-bench). Extended Thinking Mode (Beta). Parallel Tool Use & Memory. Claude Code SDK. AI agents: code execution, MCP connector, Files API, and 1-hour prompt caching. [23 May 2025]
-- [Claude 4.5](https://www.anthropic.com/news/claude-sonnet-4-5): Major upgrades in autonomous coding, tool use, context handling, memory, and long-horizon reasoning; supports over 30 hours of continuous operation. [30 Sep 2025]
-- [Claude Opus 4.5](https://www.anthropic.com/news/claude-opus-4-5):  SWE-bench Verified (80.9%).  $5/$25 per million tokens [25 Nov 2025]
-- [Claude Opus 5](https://www.anthropic.com/news/claude-opus-5): Frontier Claude model for coding and knowledge work, with adjustable effort levels and improved cost effectiveness over Opus 4.8. [24 Jul 2026]
-- [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5): Agentic model for planning, browser and terminal tool use, coding, and knowledge work; it approaches Opus 4.8 performance at a lower price. [30 Jun 2026]
-- [anthropic/cookbook](https://github.com/anthropics/anthropic-cookbook)
+- For proprietary Claude models and releases, see [Anthropic AI Products](#anthropic-ai-products).
 
 #### **Apple**
 
@@ -256,24 +253,15 @@
 
 #### **Google**
 
+- For proprietary Gemini models and releases, see [Google AI Products](#google-ai-products).
 - [Foundation Models](https://ai.google/discover/our-models/): Gemini, Veo, Gemma etc.
 - [Gemma](http://ai.google.dev/gemma): Open weights LLM from Google DeepMind. / [git](https://github.com/google-deepmind/gemma) / Pytorch / [git](https://github.com/google/gemma_pytorch) [Feb 2024]
  ![**github stars**](https://img.shields.io/github/stars/google-deepmind/gemma?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000) ![**github stars**](https://img.shields.io/github/stars/google/gemma_pytorch?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Gemma 2](https://www.kaggle.com/models/google/gemma-2/) 2B, 9B, 27B [ref: releases](https://ai.google.dev/gemma/docs/releases) [Jun 2024]
 - [Gemma 3](https://developers.googleblog.com/en/introducing-gemma3/):  Single GPU. Context
 length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](https://storage.googleapis.com/deepmind-media/gemma/Gemma3Report.pdf) [12 Mar 2025]
-- [Gemini](https://gemini.google.com/app): Rebranding: Bard -> Gemini [8 Feb 2024]
-- [Gemini 1.5](https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024):💡1 million token context window, 1 hour of video, 11 hours of audio, codebases with over 30,000 lines of code or over 700,000 words. [Feb 2024]
-- [Gemini 2 Flash](https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/): Multimodal LLM with multilingual inputs/outputs, real-time capabilities (Project Astra), complex task handling (Project Mariner), and developer tools (Jules) [11 Dec 2024]
-- Gemini 2.0 Flash Thinking Experimental [19 Dec 2024]
-- [Gemini 2.5](https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/): strong reasoning and code. 1 million token context [25 Mar 2025] -> [I/O 2025](https://blog.google/technology/ai/io-2025-keynote) Deep Think, 1M-token context, Native audio output, Project Mariner: AI-powered computer control. [20 May 2025] [Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities.📑](https://arxiv.org/abs/2507.06261)
 - [Gemma 3n](https://developers.googleblog.com/en/introducing-gemma-3n/): The next generation of Gemini Nano. Gemma 3n uses DeepMind’s Per-Layer Embeddings (PLE) to run 5B/8B models at 2GB/3GB RAM. [20 May 2025]
 - [Gemma 4](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/): Apache-2.0 open model family for reasoning, coding, multimodal, agentic workflows, and edge deployment. [Apr 2026]
-- [gemini/cookbook](https://github.com/google-gemini/cookbook)
-- [Gemini 3 Pro](https://blog.google/products/gemini/gemini-3/): Deep Think reasoning, Advanced  multimodal understanding, spatial reasoning, and agentic capabilities up 30% from 2.5 Pro — reaching 37.5% on Humanity’s Last Exam (41% in Deep Think mode). [18 Nov 2025]
-- [Gemini 3.5 Flash](https://deepmind.google/models/gemini/): Frontier-speed agentic coding and multimodal model from Google. [May 2026]
-- [Gemini 3.7 Flash](https://deepmind.google/models/gemini/flash/): Multimodal general-availability model for agentic coding, advanced reasoning, and knowledge work, with function calling, search, and computer use. [2026]
-- [Gemini Omni](https://deepmind.google/models/gemini-omni/): Any-input generative media model starting with video. [May 2026]
 
 #### **Groq**
 
@@ -385,9 +373,8 @@ length of 128K tokens, SigLIP encoder, Reasoning [Gemma 3 Technical Report](http
 
 #### **OpenAI**
 
+- For proprietary GPT models and releases, see [OpenAI Products](#openai-products).
 - [gpt-oss](https://github.com/openai/gpt-oss):💡**gpt-oss-120b** and **gpt-oss-20b** are two open-weight language models by OpenAI. [Jun 2025] ![**github stars**](https://img.shields.io/github/stars/openai/gpt-oss?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
-- [GPT-6.1 Sol](https://openai.com/index/introducing-gpt-6-1-sol/): Balances coding, computer use, and professional work at lower frontier cost; 1.05M-token context, $2/$10 per million input/output tokens. [Sep 2026]
-- [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra): Efficient visual reasoning and precise computer use at half Sol's price ($1/$5 per million input/output tokens); a separate model with the same limits. [Oct 2026]
 
 #### **Qualcomm**
 
@@ -996,8 +983,8 @@ denses the reasoning process into minimal, abstract
 #### **Knowledge Distillation**
 
 - Distilled Supervised Fine-Tuning (dSFT)
-  - [Zephyr 7B📑](https://arxiv.org/abs/2310.16944): Zephyr-7B-β is the second model in the series, and is a fine-tuned version of mistralai/Mistral-7B-v0.1 that was trained on on a mix of publicly available, synthetic datasets using Direct Preference Optimization (DPO). [🤗](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta) [25 Oct 2023]
-  - [Mistral 7B📑](https://arxiv.org/abs/2310.06825): Outperforms Llama 2 13B on all benchmarks. Uses Grouped-query attention (GQA) for faster inference. Uses Sliding Window Attention (SWA) to handle longer sequences at smaller cost. [Announcing mistral 7b](https://mistral.ai/news/announcing-mistral-7b/) [10 Oct 2023]
+  > - [Zephyr 7B📑](https://arxiv.org/abs/2310.16944): Zephyr-7B-β is the second model in the series, and is a fine-tuned version of mistralai/Mistral-7B-v0.1 that was trained on on a mix of publicly available, synthetic datasets using Direct Preference Optimization (DPO). [🤗](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta) [25 Oct 2023]
+  > - [Mistral 7B📑](https://arxiv.org/abs/2310.06825): Outperforms Llama 2 13B on all benchmarks. Uses Grouped-query attention (GQA) for faster inference. Uses Sliding Window Attention (SWA) to handle longer sequences at smaller cost. [Announcing mistral 7b](https://mistral.ai/news/announcing-mistral-7b/) [10 Oct 2023]
 - [Textbooks Are All You Need📑](https://arxiv.org/abs/2306.11644): phi-1 [20 Jun 2023]
 - [Orca 2📑](https://arxiv.org/abs/2311.11045): Orca learns from rich signals from GPT 4 including explanation traces; step-by-step thought processes; and other complex instructions, guided by teacher assistance from ChatGPT. [Orca 2 teaching small language models how to reason](https://www.microsoft.com/en-us/research/blog/orca-2-teaching-small-language-models-how-to-reason/) [18 Nov 2023]
 
@@ -1118,13 +1105,13 @@ hensive survey of over thirty-two techniques developed to mitigate hallucination
   > - [The 2025 AI Index Report](https://hai.stanford.edu/ai-index/2025-ai-index-report) [7 Apr 2025]
   > - [The 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report) [13 Apr 2026]
 - [The Agentic Operating Model](https://242623570.fs1.hubspotusercontent-na2.net/hubfs/242623570/Guides%2c%20ebook%2c%20PDF/The%20Agentic%20Operating%20Model.pdf): Aligns platform teams, domain builders, and continuous evaluation to operate production agents at scale.
-  - **People:** Three rings: platform engineers (shared infrastructure), agent engineers (domain agents), and non-technical builders. Avoids both a central bottleneck and ungoverned sprawl.
-  - **Process:** Build → Test → Deploy → Monitor, with Iterate and Govern continuous. Evaluation uses curated, synthetic, regression, and adversarial datasets; production traces feed back into improvements.
-  - **Controls:** Risk-tiered approvals, sandboxing, gradual rollout, and FinOps are built in from the start. Examples use LangChain products; the principles are portable.
+  > - **People:** Three rings: platform engineers (shared infrastructure), agent engineers (domain agents), and non-technical builders. Avoids both a central bottleneck and ungoverned sprawl.
+  > - **Process:** Build → Test → Deploy → Monitor, with Iterate and Govern continuous. Evaluation uses curated, synthetic, regression, and adversarial datasets; production traces feed back into improvements.
+  > - **Controls:** Risk-tiered approvals, sandboxing, gradual rollout, and FinOps are built in from the start. Examples use LangChain products; the principles are portable.
 - [The Agentic Organization: Contours of the Next Paradigm for the AI Era](https://www.mckinsey.com/~/media/mckinsey/business%20functions/people%20and%20organizational%20performance/our%20insights/the%20agentic%20organization%20contours%20of%20the%20next%20paradigm%20for%20the%20ai%20era/the-agentic-organization-contours-of-the-next-paradigm-for-the-ai-era.pdf?shouldIndex=false): Proposes human-agent organizations spanning business models, workflows, governance, workforce, and enabling technology and data. [Sep 2025]
-  - **Five dimensions:** Business model, operating model, governance, workforce and culture, technology and data. Core idea: AI-first workflows run by human-agent teams, with governance embedded and humans accountable.
-  - **Implication:** Redesign work, decision rights, skills, and incentives together instead of bolting agents onto unchanged processes.
-  - **Real difference from LangChain:** McKinsey covers enterprise-wide organizational design; LangChain covers how to build, evaluate, and run agents. Complementary, not competing.
+  > - **Five dimensions:** Business model, operating model, governance, workforce and culture, technology and data. Core idea: AI-first workflows run by human-agent teams, with governance embedded and humans accountable.
+  > - **Implication:** Redesign work, decision rights, skills, and incentives together instead of bolting agents onto unchanged processes.
+  > - **Real difference from LangChain:** McKinsey covers enterprise-wide organizational design; LangChain covers how to build, evaluate, and run agents. Complementary, not competing.
 - [The leading generative AI companies](https://iot-analytics.com/leading-generative-ai-companies/):💡GPU: Nvidia 92% market share, Generative AI foundational models and platforms: Microsoft 32% market share, Generative AI services: no single dominant [4 Mar 2025]
 - [Trends – Artiﬁcial Intelligence](https://www.bondcap.com/report/pdf/Trends_Artificial_Intelligence.pdf):💡Issued by Bondcap VC. 340 Slides. ChatGPT’s 800 Million Users, 99% Cost Drop within 17 months. [May 2025]
 - [Who is using AI to code? Global diffusion and impact of generative AI📑](https://arxiv.org/abs/2506.08945): AI wrote 30% of Python functions by U.S. devs in 2024. Adoption is uneven globally but boosts output and innovation. New coders use AI more, and usage drives $9.6–$14.4B in U.S. annual value. [10 Jun 2025]
@@ -1187,6 +1174,8 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [GPT-5.5](https://openai.com/index/introducing-gpt-5-5/): OpenAI model for agentic coding, computer use, knowledge work, and scientific research with 1M API context. [Apr 2026]
 - [GPT-5.6 Sol](https://openai.com/index/previewing-gpt-5-6-sol): Limited-preview flagship with `max` reasoning, `ultra` subagents, SOTA Terminal-Bench 2.1, GeneBench/cyber gains, and $5/M input, $30/M output. [Jun 2026]
 - [GPT-6 Astra, Sol, and Luna](https://platform.openai.com/docs/models) - OpenAI model-family reference for GPT-6 Astra, Sol, and Luna.
+- [GPT-6.1 Sol](https://openai.com/index/introducing-gpt-6-1-sol/): Balances coding, computer use, and professional work at lower frontier cost; 1.05M-token context, $2/$10 per million input/output tokens. [Sep 2026]
+- [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra): Efficient visual reasoning and precise computer use at half Sol's price ($1/$5 per million input/output tokens); a separate model with the same limits. [Oct 2026]
 
 #### **Product and Platform Releases**
 
@@ -1202,8 +1191,8 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [ChatGPT Memory](https://openai.com/blog/memory-and-new-controls-for-chatgpt): Remembering things you discuss `across all chats` saves you from having to repeat information and makes future conversations more helpful. [Apr 2024]
 - [ChatGPT Plugin](https://openai.com/blog/chatgpt-plugins) [23 Mar 2023]
 - [ChatGPT Work](https://openai.com/chatgpt-work/): Turns connected workplace context into documents, analyses, and scheduled tasks.
-- [CriticGPT](https://openai.com/index/finding-gpt4s-mistakes-with-gpt-4/): a version of GPT-4 fine-tuned to critique code generated by ChatGPT [27 Jun 2024]
 - [Codex 5.3](https://openai.com/index/introducing-gpt-5-3-codex/): OpenAI Codex with enhanced coding and agentic reasoning. [5 Feb 2026]
+- [CriticGPT](https://openai.com/index/finding-gpt4s-mistakes-with-gpt-4/): a version of GPT-4 fine-tuned to critique code generated by ChatGPT [27 Jun 2024]
 - [Custom instructions](https://openai.com/blog/custom-instructions-for-chatgpt): In a nutshell, the Custom Instructions feature is a cross-session memory that allows ChatGPT to retain key instructions across chat sessions. [20 Jul 2023]
 - [DALL·E 3](https://openai.com/dall-e-3) : In September 2023, OpenAI announced their latest image model, DALL-E 3 / [git](https://github.com/openai/dall-e) [Sep 2023]
  ![**github stars**](https://img.shields.io/github/stars/openai/dall-e?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -1211,8 +1200,8 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [GPT-3.5 Turbo Fine-tuning](https://openai.com/blog/gpt-3-5-turbo-fine-tuning-and-api-updates) Fine-tuning for GPT-3.5 Turbo is now available, with fine-tuning for GPT-4 coming this fall. [22 Aug 2023]
 - [GPT-Live](https://openai.com/index/introducing-gpt-live/): Full-duplex voice models for natural conversational interaction. [Jul 2026]
 - [Introducing the GPT Store](https://openai.com/blog/introducing-the-gpt-store): Roll out the GPT Store to ChatGPT Plus, Team and Enterprise users  [GPTs](https://chat.openai.com/gpts) [10 Jan 2024]
-- [New embedding models](https://openai.com/blog/new-embedding-models-and-api-updates) `text-embedding-3-small`: Embedding size: 512, 1536 `text-embedding-3-large`: Embedding size: 256,1024,3072 [25 Jan 2024]
 - [Navier–Stokes Solution](https://openai.com/index/navier-stokes-solution) - OpenAI research report on an AI-assisted solution to a Navier–Stokes problem. [Sep 2026]
+- [New embedding models](https://openai.com/blog/new-embedding-models-and-api-updates) `text-embedding-3-small`: Embedding size: 512, 1536 `text-embedding-3-large`: Embedding size: 256,1024,3072 [25 Jan 2024]
 - Open AI Enterprise: Removes GPT-4 usage caps, and performs up to two times faster [Introducing chatgpt enterprise](https://openai.com/blog/introducing-chatgpt-enterprise) [28 Aug 2023]
 - [OpenAI Decisions API](https://developers.openai.com/api/docs/guides/decisions): Returns typed probabilities, choices, and rubric scores (up to 400 questions per input) instead of free-form text; $0.10 per million uncached input tokens, no output charges. [Oct 2026]
 - [OpenAI DevDay 2023](https://openai.com/blog/new-models-and-developer-products-announced-at-devday): GPT-4 Turbo with 128K context, Assistants API (Code interpreter, Retrieval, and function calling), GPTs (Custom versions of ChatGPT: [Introducing gpts](https://openai.com/blog/introducing-gpts)), Copyright Shield, Parallel Function Calling, JSON Mode, Reproducible outputs [6 Nov 2023]
@@ -1228,40 +1217,69 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 
 ### **Anthropic AI Products**
 
-- [Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills): A way to package instructions, scripts, and resources into “skills” that Claude agents can dynamically load. [16 Oct 2025]
-- [Anthropic CLI (Claude Code)](https://www.npmjs.com/package/@anthropic-ai/claude-code): The official command-line interface that lives in your project directory, enabling natural-language code generation, refactoring, and Git automation. [24 Feb 2025]
-- [Bringing Code Review to Claude Code](https://claude.com/blog/code-review): Multi-agent PR review dispatches parallel agents and verifies bugs before posting findings. [9 Mar 2026]
-- [Claude Haiku 5.5](https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws/): Introduces efficient, low-latency capabilities for subagents and high-volume tasks, with configurable effort. [Oct 2026]
-- [Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use): Dispatch carries tasks across phone and desktop while Claude operates your computer. [23 Mar 2026]
-- [Anthropic killed Tool calling📺](https://www.youtube.com/watch?v=3wglqgskzjQ): Programmatic Tool Calling / Dynamic Filtering — what changed in Anthropic’s API. [Feb 2026]
-- [Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk): A toolkit for building multi-step, tool-using agents using the Claude API. [29 Sep 2025]
-- [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs): Anthropic Labs design experience for AI-assisted product and interface creation. [2026]
-- [Claude Fable 5 and Mythos 5](https://www.anthropic.com/news/claude-fable-5-mythos-5): Mythos-class models for long-horizon coding, vision, finance, and science; $10/M input, $50/M output, with staged safeguards/access. [Jun 2026]
-- [Fable 5.1, Mythos 5.1, Opus 5.5, and Sonnet 5.5](https://www.anthropic.com/news/claude-opus-5-5) - Anthropic model-family roundup, including Opus 5.5 and comparisons with Fable and Mythos. [Sep 2026]
-- [Claude Mythos Preview System Card](https://www.anthropic.com/claude-mythos-preview-system-card): Anthropic system card for Mythos Preview and its safety/evaluation profile. [2026]
+#### **Claude Models and Model Families**
+
+- [Claude 3](https://www.anthropic.com/news/claude-3-family), the largest version of the new LLM, outperforms rivals GPT-4 and Google’s Gemini 1.0 Ultra. Three variants: Opus, Sonnet, and Haiku. [Mar 2024]
+- [Claude 3.7 Sonnet and Claude Code](https://www.anthropic.com/news/claude-3-7-sonnet): the first hybrid reasoning model. [Claude 3.7 Sonnet System Card](https://assets.anthropic.com/m/785e231869ea8b3b/original/claude-3-7-sonnet-system-card.pdf) [25 Feb 2025]
+- [Claude 4](https://www.anthropic.com/news/claude-4): Claude Opus 4 (72.5% on SWE-bench),  Claude Sonnet 4 (72.7% on SWE-bench). Extended Thinking Mode (Beta). Parallel Tool Use & Memory. Claude Code SDK. AI agents: code execution, MCP connector, Files API, and 1-hour prompt caching. [23 May 2025]
+- [Claude 4.5](https://www.anthropic.com/news/claude-sonnet-4-5): Major upgrades in autonomous coding, tool use, context handling, memory, and long-horizon reasoning; supports over 30 hours of continuous operation. [30 Sep 2025]
+- [Claude Opus 4.5](https://www.anthropic.com/news/claude-opus-4-5):  SWE-bench Verified (80.9%).  $5/$25 per million tokens [25 Nov 2025]
 - [Claude Opus 4.6](https://www.anthropic.com/news/claude-opus-4-6): Advanced reasoning and coding flagship model. [5 Feb 2026]
+- [Claude Sonnet 4.6](https://www.anthropic.com/news/claude-sonnet-4-6): Balanced performance and speed model. [17 Feb 2026]
 - [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7): Anthropic model release focused on advanced software engineering, long-running tasks, higher-resolution vision, and Claude Code xhigh defaults. [Apr 2026]
 - [Claude Opus 4.8](https://www.anthropic.com/news/claude-opus-4-8): Stronger agentic coding and browser/computer-use model; early testers cite better judgment, tool use, and reliability. [May 2026]
-- [Claude Sonnet 4.6](https://www.anthropic.com/news/claude-sonnet-4-6): Balanced performance and speed model. [17 Feb 2026]
+- [Claude Fable 5 and Mythos 5](https://www.anthropic.com/news/claude-fable-5-mythos-5): Mythos-class models for long-horizon coding, vision, finance, and science; $10/M input, $50/M output, with staged safeguards/access. [Jun 2026]
+- [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5): Agentic model for planning, browser and terminal tool use, coding, and knowledge work; it approaches Opus 4.8 performance at a lower price. [30 Jun 2026]
+- [Claude Opus 5](https://www.anthropic.com/news/claude-opus-5): Frontier Claude model for coding and knowledge work, with adjustable effort levels and improved cost effectiveness over Opus 4.8. [24 Jul 2026]
+- [Fable 5.1, Mythos 5.1, Opus 5.5, and Sonnet 5.5](https://www.anthropic.com/news/claude-opus-5-5) - Anthropic model-family roundup, including Opus 5.5 and comparisons with Fable and Mythos. [Sep 2026]
+- [Claude Haiku 5.5](https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws/): Introduces efficient, low-latency capabilities for subagents and high-volume tasks, with configurable effort. [Oct 2026]
+
+#### **Anthropic Products, Tools, and Reference**
+
+- [Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills): A way to package instructions, scripts, and resources into “skills” that Claude agents can dynamically load. [16 Oct 2025]
+- [Anthropic CLI (Claude Code)](https://www.npmjs.com/package/@anthropic-ai/claude-code): The official command-line interface that lives in your project directory, enabling natural-language code generation, refactoring, and Git automation. [24 Feb 2025]
+- [Anthropic killed Tool calling📺](https://www.youtube.com/watch?v=3wglqgskzjQ): Programmatic Tool Calling / Dynamic Filtering — what changed in Anthropic’s API. [Feb 2026]
+- [anthropic/cookbook](https://github.com/anthropics/anthropic-cookbook)
+- [Bringing Code Review to Claude Code](https://claude.com/blog/code-review): Multi-agent PR review dispatches parallel agents and verifies bugs before posting findings. [9 Mar 2026]
+- [Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk): A toolkit for building multi-step, tool-using agents using the Claude API. [29 Sep 2025]
+- [Claude Code Security](https://www.anthropic.com/news/claude-code-security): Claude Code on the web for scanning codebases and suggesting security patches. [Feb 2026]
+- [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs): Anthropic Labs design experience for AI-assisted product and interface creation. [2026]
+- [Claude Mythos Preview System Card](https://www.anthropic.com/claude-mythos-preview-system-card): Anthropic system card for Mythos Preview and its safety/evaluation profile. [2026]
 - [Constitutional AI (CAI)](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback):🏆Anthropic’s training framework using a “constitution” (AI‑generated rules) to align models toward harmlessness. [15 Dec 2022]
 - [Cowork](https://claude.com/product/cowork): AI agent that accesses local files to automate multi-step desktop tasks like organizing, reporting, and data extraction. [Jan 2026]
-- [Claude Code Security](https://www.anthropic.com/news/claude-code-security): Claude Code on the web for scanning codebases and suggesting security patches. [Feb 2026]
 - [Detecting and preventing distillation attacks](https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks): 16M+ fraudulent exchanges scraped from Claude; Anthropic’s detection and prevention. [Feb 2026]
 - [Frontier AI Safety Research](https://www.anthropic.com/transparency): Foundational research into AI risks, alignment, and interpretability.
 - [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol):🏆An open standard for connecting AI assistants to external systems (data, tools, etc.) securely and scalably. [25 Nov 2024]
 - [Programmatic Tool Calling](https://www.anthropic.com/engineering/advanced-tool-use): Enables Claude to write orchestration code (e.g., Python) to call multiple tools in a sequence, improving efficiency. [24 Nov 2025]
+- [Put Claude to work on your computer](https://claude.com/blog/dispatch-and-computer-use): Dispatch carries tasks across phone and desktop while Claude operates your computer. [23 Mar 2026]
 - [Tool Use & Agent Orchestration](https://www.anthropic.com/engineering/advanced-tool-use): Advanced tool‑use framework for Claude agents, allowing dynamic API discovery and execution in complex tasks. [24 Nov 2025]
 
 ### **Google AI Products**
 
+#### **Google Models and Model Families**
+
+- [Vertex AI Codey](https://cloud.google.com/vertex-ai): A family of foundation models (Code-Bison, Code-Gecko) optimized for code generation and completion, accessible via API. [29 Jun 2023]
+- [Gemini](https://gemini.google.com/app): Rebranding: Bard -> Gemini [8 Feb 2024]
+- [Gemini 1.5](https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024):💡1 million token context window, 1 hour of video, 11 hours of audio, codebases with over 30,000 lines of code or over 700,000 words. [Feb 2024]
+- [Gemini 2 Flash](https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/): Multimodal LLM with multilingual inputs/outputs, real-time capabilities (Project Astra), complex task handling (Project Mariner), and developer tools (Jules) [11 Dec 2024]
+- Gemini 2.0 Flash Thinking Experimental [19 Dec 2024]
+- [Gemini 2.5](https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/): strong reasoning and code. 1 million token context [25 Mar 2025] -> [I/O 2025](https://blog.google/technology/ai/io-2025-keynote) Deep Think, 1M-token context, Native audio output, Project Mariner: AI-powered computer control. [20 May 2025] [Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities.📑](https://arxiv.org/abs/2507.06261)
+- [Gemini 3 Pro](https://blog.google/products/gemini/gemini-3/): Deep Think reasoning, Advanced  multimodal understanding, spatial reasoning, and agentic capabilities up 30% from 2.5 Pro — reaching 37.5% on Humanity’s Last Exam (41% in Deep Think mode). [18 Nov 2025]
+- [Gemini 3.5 Flash](https://deepmind.google/models/gemini/): Frontier-speed agentic coding and multimodal model from Google. [May 2026]
+- [Gemini 3.7 Flash](https://deepmind.google/models/gemini/flash/): Multimodal general-availability model for agentic coding, advanced reasoning, and knowledge work, with function calling, search, and computer use. [2026]
+- [Gemini 3.8 Flash](https://deepmind.google/models/gemini/flash/) - Fast multimodal model for agentic coding, reasoning, and knowledge work. [Sep 2026]
+- [Gemini 4 Argon](https://deepmind.google/models/model-cards/gemini-4-argon/): Multimodal reasoning model for long-context coding, science, and tool-using agents; its 1,048,576-token window is shared by input, thinking, and output; $2/$10 per million tokens through 30 Nov, then $4/$20. [Oct 2026]
+- [Gemini Omni](https://deepmind.google/models/gemini-omni/): Any-input generative media model starting with video. [May 2026]
+
+#### **Google Products, Tools, and Reference**
+
 - [AlphaMissense](https://deepmind.google/science/): A machine learning tool that classifies the effects of 71 million 'missense' mutations in the human genome to help pinpoint disease causes. [2025]
 - [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/): An autonomous AI agent leveraging Gemini Deep Think models to automatically find, debug, and fix complex software security vulnerabilities. [Oct 2025]
 - [Firebase Studio](https://firebase.google.com/docs/ai-assistance/gemini-in-firebase): A web-based IDE that uses Gemini to assist in building, refactoring, and troubleshooting full-stack web and mobile applications. [7 May 2025]
-- [Gemini 4 Argon](https://deepmind.google/models/model-cards/gemini-4-argon/): Multimodal reasoning model for long-context coding, science, and tool-using agents; its 1,048,576-token window is shared by input, thinking, and output; $2/$10 per million tokens through 30 Nov, then $4/$20. [Oct 2026]
 - [Gemini CLI](https://github.com/google/gemini-cli): An open-source terminal interface for "vibecoding" that brings Gemini 3 Pro capabilities directly to the command line for script generation and automation. [25 Jun 2025]
-- [Gemini 3.8 Flash](https://deepmind.google/models/gemini/flash/) - Fast multimodal model for agentic coding, reasoning, and knowledge work. [Sep 2026]
 - [Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist): An enterprise-grade AI assistant for IDEs (VS Code, IntelliJ) that offers context-aware code completion, generation, and chat using Gemini models. [20 May 2025]
 - [Gemini Code Assist for GitHub](https://developers.google.com/gemini-code-assist/docs/review-github-code): A specialized agent that acts as a code reviewer on Pull Requests, identifying bugs, style issues, and suggesting fixes automatically. [20 May 2025]
+- [gemini/cookbook](https://github.com/google-gemini/cookbook)
 - [Google AI for Developers](https://ai.google.dev/): A suite of research tools including AI-powered documentation search and code explanation to accelerate learning and implementation. [Jul 2024]
 - [Google Antigravity](https://codelabs.developers.google.com/getting-started-google-antigravity): An "agent-first" IDE platform announced with Gemini 3 that gives autonomous agents direct control over editors, terminals, and browsers to build and verify software. [18 Nov 2025]
 - [Introducing "vibe design" with Stitch](https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/): AI-native design canvas for turning prompts and images into UI drafts. [18 Mar 2026]
@@ -1269,7 +1287,6 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [Mapping the Complete Male Fruit-Fly Brain](https://research.google/blog/a-connectomics-milestone-mapping-the-complete-male-fruit-fly-brain/) - Maps more than 166,000 neurons and 125 million synaptic connections. [Sep 2026]
 - [NotebookLM](https://notebooklm.google/): An AI-powered research and thinking partner that synthesizes complex information and automates online research using the **Deep Research** agent feature. [13 Nov 2025]
 - [SIMA 2](https://deepmind.google/models/): (Scalable Instructable Multiworld Agent) A research agent that explores and learns to play across a variety of 3D video game environments, aimed at general-purpose robotics. [13 Nov 2025]
-- [Vertex AI Codey](https://cloud.google.com/vertex-ai): A family of foundation models (Code-Bison, Code-Gecko) optimized for code generation and completion, accessible via API. [29 Jun 2023]
 
 ## **Survey and Reference**
 
@@ -1498,7 +1515,7 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
  ![**github stars**](https://img.shields.io/github/stars/databricks-academy/large-language-models?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [LLM FineTuning Projects and notes on common practical techniques](https://github.com/rohan-paul/LLM-FineTuning-Large-Language-Models) [Oct 2023]
  ![**github stars**](https://img.shields.io/github/stars/rohan-paul/LLM-FineTuning-Large-Language-Models?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
-- LLM inference optimization techniques: Flash Attention, Paged Attention, continuous batching, speculative decoding, and kernel fusion.
+- LLM inference optimization techniques: Flash Attention, Paged Attention, continuous batching, speculative decoding, and kernel fusion.  
   <img width="650" alt="Infographic comparing Flash Attention, Paged Attention, Continuous Batching, Speculative Decoding, and Kernel Fusion for efficient LLM inference" src="https://github.com/user-attachments/assets/b50fd53d-0b0a-4158-9860-e1473bea5ec3" />
 - [LLM Visualization](https://bbycroft.net/llm): A 3D animated visualization of an LLM with a walkthrough
 - [Machine learning algorithms](https://github.com/rushter/MLAlgorithms): ml algorithms or implementation from scratch [Oct 2016] ![**github stars**](https://img.shields.io/github/stars/rushter/MLAlgorithms?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
@@ -1513,4 +1530,3 @@ Reuse (MR), Divide and Conquer (DC), Self-Refinement (SR), Context Identificatio
 - [The Illustrated GPT-OSS](https://newsletter.languagemodels.co/p/the-illustrated-gpt-oss) [19 Aug 2025]
 - [What are the most influential current AI Papers?📑](https://arxiv.org/abs/2308.04889): NLLG Quarterly arXiv Report 06/23 / [git](https://github.com/NL2G/Quaterly-Arxiv) [31 Jul 2023]
  ![**github stars**](https://img.shields.io/github/stars/NL2G/Quaterly-Arxiv?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
-
