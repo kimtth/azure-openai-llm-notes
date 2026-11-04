@@ -256,6 +256,7 @@
 - [Dive into Claude Code📑](https://arxiv.org/abs/2604.14228): Research paper analyzing Claude Code as an agentic coding system. [Apr 2026]
 - [Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?📑](https://arxiv.org/abs/2602.11988): AGENTS.md often reduces agent success rates and increases cost — keep them minimal. [Feb 2026]
 - [Generative Agent Simulations of 1,000 People📑](https://arxiv.org/abs/2411.10109): Simulates 1,000 real individuals; 85% General Social Survey accuracy. [Nov 2024]
+- [Graph-of-Agents: A Graph-based Framework for Multi-Agent LLM Collaboration📑](https://arxiv.org/abs/2604.17148): Selects relevant agents and refines responses through directed message passing and graph pooling. [Apr 2026]
 - [How AI Agents Reshape Knowledge Work📑](https://arxiv.org/abs/2606.07489): Perplexity production-data study: Computer performs 26 minutes autonomous work per session, cuts matched-task time 269→36 minutes, and lowers dissatisfaction 55%. [Jun 2026]
 - [Hyperagents📑](https://arxiv.org/abs/2603.19461): Self-referential agents. Metacognitive self-improvement, where AI rewrites its own improvement process—achieving cross-domain gains (e.g., 0→0.71 in review tasks). [Mar 2026]
 - [LDB📑](https://arxiv.org/abs/2402.16906): LLM debugger verifying runtime execution step by step. [Feb 2024]

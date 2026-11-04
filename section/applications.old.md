@@ -67,9 +67,9 @@ Source section: [UI & No-Code Tool](applications.md#ui--no-code-tool).
 - [knowledge](https://github.com/KnowledgeCanvas/knowledge): Tool for saving, searching, accessing, and exploring websites and files. Electron based app, built-in Chromium browser, knowledge graph [Jul 2021] ![**github stars**](https://img.shields.io/github/stars/KnowledgeCanvas/knowledge?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 - [Open Agent Platform](https://github.com/langchain-ai/open-agent-platform): Langchain. An open-source, no-code agent building platform. [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/langchain-ai/open-agent-platform?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000).
 
-### Computer use
+### Computer & Browser use
 
-Source section: [Computer use](applications.md#computer-use).
+Source section: [Computer & Browser use](applications.md#computer--browser-use).
 
 - [Open Operator](https://github.com/browserbase/open-operator): a web agent based on Browserbase [24 Jan 2025] ![**github stars**](https://img.shields.io/github/stars/browserbase/open-operator?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
@@ -227,9 +227,9 @@ Source section: [A2A](applications.md#a2a).
 - [Python A2A](https://github.com/themanojdesai/python-a2a): Python Implementation of Google's Agent-to-Agent (A2A) Protocol with Model Context Protocol (MCP) Integration [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/themanojdesai/python-a2a?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [SharpA2A](https://github.com/darrelmiller/sharpa2a): A .NET implementation of the Google A2A protocol. [Apr 2025] ![**github stars**](https://img.shields.io/github/stars/darrelmiller/sharpa2a?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 
-### Computer use
+### Computer & Browser use
 
-Source section: [Computer use](applications.md#computer-use).
+Source section: [Computer & Browser use](applications.md#computer--browser-use).
 
 - [ACU - Awesome Agents for Computer Use](https://github.com/francedot/acu) ![**github stars**](https://img.shields.io/github/stars/francedot/acu?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
 - [Agent.exe](https://github.com/corbt/agent.exe): Electron app to use computer use APIs. [Oct 2024] ![**github stars**](https://img.shields.io/github/stars/corbt/agent.exe?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)

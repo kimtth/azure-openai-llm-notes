@@ -1,6 +1,6 @@
 ---
 name: fetch-llm-papers
-description: "Refresh the LLM landscape paper pool (section/x_llm_papers.md) with fetch_llm_papers.py. USE FOR: refreshing citation counts or expanding topic coverage. DO NOT USE FOR: hand-curated entries (use add-new-entry-from-temp-md) or best_practices.md citation counts (use update-cite-count)."
+description: "Refresh the LLM landscape paper pool (section/x_llm_papers.md) with fetch_llm_papers.py. USE FOR: refreshing citation counts or expanding topic coverage. DO NOT USE FOR: hand-curated entries (use land-section-entries) or best_practices.md citation counts (use update-cite-count)."
 ---
 
 `section/x_llm_papers.md` is a generated list of CS papers with at least 150 citations, ranked by citation count via Semantic Scholar. `models_research.md` links to it. Do not edit it by hand.

@@ -19,9 +19,9 @@ A comprehensive, curated collection of resources for Azure OpenAI, Large Languag
 
 | Layer / Era | What it controls | Jump to sections |
 |-------------|----------------------------------------|-------------|
-| **Weights** <br/> 2022-2023 | Capabilities encoded in model parameters. <br/> `Themes: Pretraining, scaling, fine-tuning, alignment` | [Model landscape](section/models_research.md#large-language-model-landscape) · [Model collection](section/models_research.md#large-language-model-collection) · [Training & optimization](section/models_research.md#large-language-model-training-and-optimization) · [Model training](section/azure.md#model-training--inference) |
-| **Context** <br/> 2023-2024 | Instructions and knowledge supplied at inference. <br/> `Themes: Prompting, RAG, memory, long context` | [Prompting](section/models_research.md#prompt-engineering-and-visual-prompts) · [RAG](section/applications.md#rag-retrieval-augmented-generation) · [Azure AI Search](section/azure.md#azure-ai-search) · [Memory](section/applications.md#memory) · [Long-context limits](section/models_research.md#context-and-long-context-limits) |
-| **Agentic Engineering** <br/> 2025-2026 | How applications use models and tools to act. <br/> `Themes: Agents, MCP, skills, orchestration, evaluation` | [Agent frameworks](section/azure.md#agent-frameworks) · [Agent protocols](section/applications.md#agent-protocol) · [Agentic engineering](section/applications.md#agentic-engineering) · [Agent best practices](section/best_practices.md#agent-best-practices) · [Evaluation](section/tools_extra.md#evaluating-large-language-models) |
+| **Weights** <br/> 2022-2023 | Capabilities encoded in model parameters. <br/> `Themes: Pretraining, scaling, fine-tuning, alignment` | [Model landscape](section/models_research.md#large-language-model-landscape) · [Model collection](section/models_research.md#large-language-model-collection) · [Training & optimization](section/models_research.md#large-language-model-training-and-optimization) · [Model training](section/azure.md#models-training--inference) |
+| **Context** <br/> 2023-2024 | Instructions and knowledge supplied at inference. <br/> `Themes: Prompting, RAG, memory, long context` | [Prompting](section/models_research.md#prompt-engineering-and-visual-prompts) · [RAG](section/applications.md#rag-retrieval-augmented-generation) · [IQ, Data & Memory (Azure)](section/azure.md#iq--data--memory) · [Memory](section/applications.md#memory) · [Long-context limits](section/models_research.md#context-and-long-context-limits) |
+| **Agentic Engineering** <br/> 2025-2026 | How applications use models and tools to act. <br/> `Themes: Agents, MCP, skills, orchestration, evaluation` | [Agent frameworks](section/azure.md#agents--context-engineering) · [Agent protocols](section/applications.md#agent-protocol) · [Agentic engineering](section/applications.md#agentic-engineering) · [Agent best practices](section/best_practices.md#agent-best-practices) · [Evaluation](section/tools_extra.md#evaluating-large-language-models) |
 
 Refereces: [DailyDoseOfDS - *Evolution of the Agent Landscape*](https://blog.dailydoseofds.com/p/evolution-of-agent-landscape-from)
 
@@ -50,7 +50,7 @@ Refereces: [DailyDoseOfDS - *Evolution of the Agent Landscape*](https://blog.dai
   - [UI & No-Code Tool](section/applications.md#ui--no-code-tool)
 - **Agent Protocols**
   - [A2A](section/applications.md#a2a)
-  - [Computer use](section/applications.md#computer-use)
+  - [Computer & Browser use](section/applications.md#computer--browser-use)
   - [Model Context Protocol (MCP)](section/applications.md#model-context-protocol-mcp)
 - **Coding & Research**
   - [Coding](section/applications.md#coding)
@@ -64,27 +64,24 @@ Refereces: [DailyDoseOfDS - *Evolution of the Agent Landscape*](https://blog.dai
 ## 2. Azure OpenAI & Copilot
 🌌 [Microsoft's Cloud-Based AI Platform and Services](section/azure.md)
 
-- **Overview**
-  - [Azure OpenAI & Foundry Overview](section/azure.md#azure-openai--foundry-overview)
-- **Frameworks**
-  - [Orchestration Frameworks](section/azure.md#orchestration-frameworks)
-  - [Agent Frameworks](section/azure.md#agent-frameworks)
-- **Tooling**
-  - [Prompt Engineering & Tooling](section/azure.md#prompt-engineering--tooling)
-  - [Dev Tools, MCP & Extensions](section/azure.md#dev-tools-mcp--extensions)
-- **Products**
-  - [Copilot Product Catalog](section/azure.md#copilot-product-catalog)
-  - [Agent Development](section/azure.md#agent-development)
-  - [Microsoft 365 Agent Development](section/azure.md#microsoft-365-agent-development)
-- **Services**
-  - [Azure AI Search](section/azure.md#azure-ai-search)
-  - [Microsoft Foundry & AI Services](section/azure.md#microsoft-foundry--ai-services)
-- **Research**
+- **Microsoft Ecosystem**
+  - [Microsoft 365 Copilot](section/azure.md#microsoft-365-copilot)
+  - [Power Platform & Copilot Studio](section/azure.md#power-platform--copilot-studio)
+  - [Copilot Products](section/azure.md#copilot-products)
+- **Platform**
+  - [AI Platform & Services](section/azure.md#ai-platform--services)
+  - [Models, Training & Inference](section/azure.md#models-training--inference)
+  - [IQ & Data & Memory](section/azure.md#iq--data--memory)
+  - [Agents & Context Engineering](section/azure.md#agents--context-engineering)
+- **Operations & Design**
+  - [Developer Tools, MCP & .NET](section/azure.md#developer-tools-mcp--net)
+  - [Safety, Security & LLMOps](section/azure.md#safety-security--llmops)
+  - [Architecture & Reference Designs](section/azure.md#architecture--reference-designs)
+  - [Solution Accelerators & Samples](section/azure.md#solution-accelerators--samples)
+  - [Use Cases & Customer Stories](section/azure.md#use-cases--customer-stories)
+- **Learning & Research**
+  - [Learning Resources & Workshops](section/azure.md#learning-resources--workshops)
   - [Microsoft Research](section/azure.md#microsoft-research)
-- **Applications**
-  - [Sample Applications](section/azure.md#sample-applications)
-  - [Solution Accelerators](section/azure.md#solution-accelerators)
-  - [Architecture Patterns & Use Cases](section/azure.md#architecture-patterns--use-cases)
 
 **[⬆ back to top](#azure-openai--llm-wiki)**
 
@@ -157,14 +154,14 @@ Pick the outcome closest to your task and follow the links in order. Each path i
 
 | Goal | Suggested path |
 |------|----------------|
-| **Build a RAG application** | [RAG](section/applications.md#rag-retrieval-augmented-generation) → [Azure AI Search](section/azure.md#azure-ai-search) → [RAG Solution Design](section/best_practices.md#rag-solution-design) → [RAG Application](section/applications.md#rag-application) |
-| **Design an AI agent** | [Top Agent Frameworks](section/applications.md#top-agent-frameworks) → [Agent Design Patterns](section/best_practices.md#agent-design-patterns) → [Agent Development](section/azure.md#agent-development) → [Memory](section/applications.md#memory) |
-| **Connect tools with MCP** | [Model Context Protocol](section/applications.md#model-context-protocol-mcp) → [Dev Tools, MCP & Extensions](section/azure.md#dev-tools-mcp--extensions) → [Tool Use](section/best_practices.md#tool-use) |
-| **Build a Microsoft 365 agent** | [Microsoft 365 Agent Development](section/azure.md#microsoft-365-agent-development) → [Copilot Product Catalog](section/azure.md#copilot-product-catalog) → [Agent Development](section/azure.md#agent-development) |
+| **Build a RAG application** | [RAG](section/applications.md#rag-retrieval-augmented-generation) → [Azure IQ, Data & Memory (AI Search)](section/azure.md#iq--data--memory) → [RAG Solution Design](section/best_practices.md#rag-solution-design) → [RAG Application](section/applications.md#rag-application) |
+| **Design an AI agent** | [Top Agent Frameworks](section/applications.md#top-agent-frameworks) → [Agent Design Patterns](section/best_practices.md#agent-design-patterns) → [Agents & Context Engineering](section/azure.md#agents--context-engineering) → [Memory](section/applications.md#memory) |
+| **Connect tools with MCP** | [Model Context Protocol](section/applications.md#model-context-protocol-mcp) → [Developer Tools, MCP & .NET](section/azure.md#developer-tools-mcp--net) → [Tool Use](section/best_practices.md#tool-use) |
+| **Build a Microsoft 365 agent** | [Microsoft 365 Copilot](section/azure.md#microsoft-365-copilot) → [Agents & Context Engineering](section/azure.md#agents--context-engineering) |
 | **Build a coding or research agent** | [Coding](section/applications.md#coding) → [Skills](section/applications.md#skills) → [Agentic Engineering](section/applications.md#agentic-engineering) → [Deep Research](section/applications.md#deep-research) |
 | **Run a local model application** | [Model Collection](section/models_research.md#large-language-model-collection) → [Model Serving & Local Runtimes](section/applications.md#model-serving--local-runtimes) → [Model Gateway](section/applications.md#model-gateway) → [Observability & LLMOps](section/applications.md#observability--llmops) |
 | **Train or evaluate a model** | [Datasets for LLM Training](section/tools_extra.md#datasets-for-llm-training) → [Training & Fine-tuning](section/applications.md#training--fine-tuning) → [Evaluating Large Language Models](section/tools_extra.md#evaluating-large-language-models) → [Evaluation Metrics](section/tools_extra.md#evaluation-metrics) |
-| **Operate an application in production** | [Architecture Patterns & Use Cases](section/azure.md#architecture-patterns--use-cases) → [Safety, Security & LLMOps](section/azure.md#safety-security--llmops) → [LLMOps](section/tools_extra.md#llmops-large-language-model-operations) → [Evaluation](section/tools_extra.md#evaluating-large-language-models) |
+| **Operate an application in production** | [Architecture & Reference Designs](section/azure.md#architecture--reference-designs) → [Safety, Security & LLMOps](section/azure.md#safety-security--llmops) → [LLMOps](section/tools_extra.md#llmops-large-language-model-operations) → [Evaluation](section/tools_extra.md#evaluating-large-language-models) |
 | **Explore LLM research** | [Model Landscape](section/models_research.md#large-language-model-landscape) → [Survey and Reference](section/models_research.md#survey-and-reference) → [LLM Research](section/models_research.md#llm-research-ranked-by-cite-count-150) |
 
 ## 📖 Legend & Notation
