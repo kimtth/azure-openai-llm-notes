@@ -211,6 +211,7 @@ databricks-dolly-15k: Instruction-Tuned [🤗](https://huggingface.co/datasets/d
 - [LiveCodeBench Pro](https://huggingface.co/spaces/LiveCodeBench/leaderboard): Algorithmic coding problems. (Gemini 3: Elo 2,439)
 - [OSWorld📑](https://arxiv.org/abs/2404.07972):💡Benchmark for multimodal agents completing open-ended tasks in real Ubuntu, Windows, and macOS environments, with execution-based evaluation. / [git](https://github.com/xlang-ai/OSWorld) [11 Apr 2024]
  ![**github stars**](https://img.shields.io/github/stars/xlang-ai/OSWorld?style=flat&label=%20&color=f0f1f2&cacheSeconds=360000)
+- [SMB Bench](https://oroagents.com/benchmarks/smb-bench): A model runs the buying desk of a simulated produce wholesaler for a 90-day quarter and is scored on profit against a fixed buying rule; every scored run and its trace is public. [6 Nov 2026]
 - [Tau2-bench📑](https://arxiv.org/pdf/2506.07982): Multi-turn tool usage in customer support. (GPT-5.2: 98.7% Telecom, 82.0% Retail)
 - [Vending-Bench 2](https://www.vellum.ai/blog/google-gemini-3-benchmarks): Year-long business simulation. (Gemini 3: $5,478.16 mean net worth, 272% higher than GPT-5.1)
 - [WebArena📑](https://arxiv.org/abs/2307.13854):💡A self-hostable, realistic web environment with long-horizon tasks across e-commerce, social discussion, software development, and content management sites. / [git](https://github.com/web-arena-x/webarena) [25 Jul 2023]
